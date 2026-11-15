@@ -640,6 +640,90 @@ footer {
 
 .foot a { color: var(--secondary); }
 
+/* Landing additions (alpha.3) */
+.hero-logo {
+  display: block;
+  width: 112px;
+  height: 112px;
+  border-radius: 24px;
+  margin-bottom: 24px;
+}
+.hero-meta { margin: 20px 0 0; font-size: 14px; line-height: 20px; color: var(--on-navy-2); }
+.hero-meta a { color: var(--on-navy); }
+.warning {
+  width: min(1120px, 100%);
+  margin: 32px auto 0;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--on-navy);
+  color: var(--navy);
+  font-size: 15px;
+  line-height: 24px;
+}
+.warning strong { color: var(--navy); }
+.warning-light {
+  width: auto;
+  margin: 24px 0 0;
+  background: var(--raised);
+  color: var(--secondary);
+  border: 1px solid var(--line-strong);
+}
+.warning-light strong { color: var(--ink); }
+.warning-light code {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  color: var(--ink);
+  background: var(--card);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.trio, .downloads {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+.download-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.download-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.download-card p { margin: 0; color: var(--secondary); font-size: 15px; line-height: 22px; }
+.download-card code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  background: var(--raised);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+.button-dark { background: var(--navy); color: #ffffff; margin-top: auto; }
+.button-dark:hover { background: var(--accent); color: #ffffff; }
+.dl-size { margin-left: 8px; font-weight: 400; font-size: 13px; opacity: 0.75; font-variant-numeric: tabular-nums; }
+.dl-alt { font-size: 13px !important; line-height: 18px !important; color: var(--muted) !important; }
+.dl-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 15px; line-height: 22px; }
+.dl-list span { color: var(--muted); font-size: 13px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+.escrow-intro + section { margin-top: 48px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+@media (max-width: 880px) {
+  .trio, .downloads { grid-template-columns: 1fr; }
+  .hero-logo { width: 88px; height: 88px; border-radius: 20px; }
+}
+
 @media (max-width: 880px) {
   .nav { flex-direction: column; align-items: flex-start; gap: 12px; }
   .nav-links { justify-content: flex-start; }
