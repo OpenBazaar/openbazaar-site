@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="760" viewBox="0 0 940 760" fill="none">
+  <defs>
+    <pattern id="canopies" width="470" height="380" patternUnits="userSpaceOnUse" patternTransform="rotate(-13 470 380)">
+      <g stroke="#70c2f4" stroke-width=".8">
+        <path d="M12 218 235 74 458 218 12 218ZM235 74V31l48 15-48 17M235 74l-85 144m85-144 85 144M47 247v119m376-119v119M47 343h376"/>
+        <path d="M12 218c15 38 45 38 60 0 15 38 45 38 60 0 15 38 45 38 60 0 20 38 47 38 66 0 15 38 45 38 60 0 15 38 45 38 60 0 20 38 60 38 80 0"/>
+        <path d="m12 218 223-108 223 108M47 326h376" opacity=".4"/>
+      </g>
+    </pattern>
+  </defs>
+  <path fill="url(#canopies)" d="M0 0h940v760H0z"/>
+</svg>
