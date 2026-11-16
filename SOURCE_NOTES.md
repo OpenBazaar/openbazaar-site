@@ -31,9 +31,13 @@ Historical OpenBazaar 2.0 functionality is not attributed to this codebase.
 
 ## Visual assets
 
-- The existing `ob-market-logo-256.png` is preserved. Its dominant midnight
-  navy is approximately `#011327`; its marketplace blue is approximately
-  `#0d71c8`. Cyan is used as a highlight within that established blue family.
+- The existing `ob-market-logo-256.png` is preserved. Its marketplace blue,
+  approximately `#0d71c8`, is the site accent on a near-black ink palette.
+  The scalloped awning edge on the hero screenshot and download section is
+  drawn in CSS after the awning in the mark.
+- `fonts/bricolage-grotesque-wdth.woff2` is the Latin subset of Bricolage
+  Grotesque (SIL Open Font License 1.1, Google Fonts via Fontsource),
+  self-hosted for headlines.
 - `assets/marketplace.jpg` is copied from
   `output/twitter-teasers/assets/marketplace.jpg` in the main repository.
 - `assets/wallet.jpg` is copied from
@@ -43,8 +47,6 @@ Historical OpenBazaar 2.0 functionality is not attributed to this codebase.
 - These are existing app captures with fixture/demo data. The homepage
   explicitly labels them as alpha captures with demo data and test coins.
   They are not fabricated product interfaces or evidence of a live market.
-- `assets/canopy.svg` is original geometric line artwork derived from the
-  roof, awning, and flag in the OpenBazaar tent mark.
 - The NixOS homepage was reviewed for its open-source project navigation,
   flat blue fields, and large readable type. Its assets were not copied.
 
@@ -52,6 +54,6 @@ Historical OpenBazaar 2.0 functionality is not attributed to this codebase.
 
 Check fragment IDs and local asset references, compare all release download
 URLs with the original homepage, run `node --check site.js`, and inspect
-responsive layouts plus keyboard-operated screenshot/architecture tabs.
+responsive layouts plus the keyboard-operated screenshot tabs and mobile menu.
 The screenshot enlargement uses a native dialog with Escape and close-button
 support. No continuous graphics renderer or animation loop is used.

@@ -1,21 +1,23 @@
+document.documentElement.classList.add('js');
+
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 const screens = {
   marketplace: {
     src: 'assets/marketplace.jpg',
-    alt: 'OpenBazaar desktop alpha: product search, independent stores, and a catalog of home goods on testnet4.',
-    caption: 'Browse goods from independent stores.',
+    alt: 'The OpenBazaar desktop alpha: a search bar, categories, and home goods from independent demo stores, priced in test coins.',
+    caption: 'Browse stores run by the people who own them',
     title: 'Marketplace',
   },
   wallet: {
     src: 'assets/wallet.jpg',
-    alt: 'OpenBazaar desktop alpha: the node wallet with spendable and pending testnet4 balances and a receive address.',
-    caption: 'Manage the wallet on your own node.',
-    title: 'Node wallet',
+    alt: 'The OpenBazaar desktop alpha: the built-in wallet with spendable and pending testnet4 balances and a receive address.',
+    caption: 'The wallet lives in your app, not on a platform',
+    title: 'Wallet',
   },
   orders: {
     src: 'assets/orders.jpg',
-    alt: 'OpenBazaar desktop alpha: a demo order awaiting payment, with node-wallet and external-wallet payment options.',
-    caption: 'One seller. One order. One direct payment.',
+    alt: 'The OpenBazaar desktop alpha: a demo order awaiting payment, with options to pay from the app wallet or another wallet.',
+    caption: 'Pay one seller directly for one order',
     title: 'Orders',
   },
 };
@@ -106,40 +108,18 @@ if (typeof dialog.showModal === 'function') {
   });
 }
 
-const flows = {
-  catalog: {
-    protocol: 'BIP 340 / SHA-256',
-    title: 'Verify the seller, not the server.',
-    description: 'Your node checks store and listing signatures. A listing’s content hash identifies the exact version an order refers to. A valid signature proves authorship and integrity; it does not prove freshness, availability, or an honest seller.',
-    accessible: 'A buyer’s app talks to its own node. The buyer’s node retrieves a signed catalog from a seller’s node over Tor.',
-  },
-  order: {
-    protocol: 'SEALED ORDER / TOR',
-    title: 'Address the order to one vendor.',
-    description: 'The order names the signed listing version and carries the purchase terms. It is sealed to the vendor and delivered through the node’s Tor client. Public catalog records exclude shipping details; the vendor needs those details to fulfill a physical order.',
-    accessible: 'The buyer’s node seals an order to the seller and sends it through Tor to the seller’s node. The seller receives the order details.',
-  },
-  payment: {
-    protocol: 'BITCOIN / DIRECT PAY',
-    title: 'Pay the seller, without platform custody.',
-    description: 'The seller’s node supplies a fresh Bitcoin receive address for the order. The buyer pays from its node wallet or an external wallet. Bitcoin settles on its own network, not through Tor. Direct pay offers no escrow protection; moderated escrow is a separate testnet4 protocol.',
-    accessible: 'The buyer pays the seller’s order-specific Bitcoin address using the Bitcoin network. The Tor connection exchanges order information; it does not settle the payment.',
-  },
+const menuButton = document.querySelector('.menu-button');
+const navLinks = document.querySelector('#nav-links');
+const setMenu = open => {
+  menuButton.setAttribute('aria-expanded', String(open));
+  navLinks.classList.toggle('open', open);
 };
-
-const flowPanel = document.querySelector('#flow-panel');
-enableTabs(document.querySelector('.flow-tabs'), tab => {
-  const name = tab.dataset.flow;
-  const flow = flows[name];
-  flowPanel.dataset.stage = name;
-  flowPanel.setAttribute('aria-labelledby', tab.id);
-  document.querySelector('#flow-protocol').textContent = flow.protocol;
-  document.querySelector('#flow-heading').textContent = flow.title;
-  document.querySelector('#flow-description').textContent = flow.description;
-  document.querySelector('.diagram').setAttribute('aria-label', flow.accessible);
-  // The settlement view labels the network explicitly, rather than implying
-  // that Bitcoin itself is transported by the order's Tor channel.
-  document.querySelector('.transport-label').textContent = name === 'payment' ? 'BITCOIN' : 'TOR';
-  document.querySelector('.transport-small').textContent = name === 'payment' ? 'direct settlement' : 'onion service';
-  document.querySelector('.mobile-transport').textContent = name === 'payment' ? 'Bitcoin / direct settlement ↓' : 'Tor onion service ↓';
+menuButton.hidden = false;
+menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+navLinks.addEventListener('click', event => { if (event.target.closest('a')) setMenu(false); });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+    setMenu(false);
+    menuButton.focus();
+  }
 });
