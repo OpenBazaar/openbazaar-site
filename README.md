@@ -14,19 +14,22 @@ served locally. There are no analytics or external page dependencies.
 
 ## Structure
 
-- `index.html`: homepage, downloads, source references, and resource navigation.
-- `styles.css`: dark ink palette with the logo's marketplace blue, and responsive layout.
-- `site.js`: keyboard-accessible screenshot tabs, native screenshot dialog,
-  and the small-screen navigation menu.
-- `assets/`: real testnet4 app captures.
-- `fonts/`: self-hosted Instrument Sans (text) and Bricolage Grotesque (headlines).
+- `index.html`: homepage written for buyers and sellers (selling, buying,
+  how an order works and what happens when it goes wrong, questions,
+  downloads), with one small developer strip near the bottom.
+- `styles.css`: near-black cyberpunk palette (electric cyan, magenta for
+  cautions), fine grid and scanline textures, HUD-framed screenshots, and
+  responsive layout.
+- `site.js`: the small-screen navigation menu.
+- `assets/`: real testnet4 app captures (buyer marketplace, seller sales screen).
+- `fonts/`: self-hosted Bricolage Grotesque (headlines), Instrument Sans (text)
+  and IBM Plex Mono (labels).
 - `paper/`: existing published technical paper, preserved separately.
 - `SOURCE_NOTES.md`: claim verification and asset provenance.
 
-JavaScript adds optional interactions. The base page, product capture,
-protocol notes, downloads, navigation, and source links work without it. View Transitions
-are optional and disabled under the system's reduced-motion preference.
-There are no continuously running animations.
+The page works without JavaScript; the script only adds the mobile menu.
+There are no animations, and smooth scrolling is off under the system's
+reduced-motion preference.
 
 ## Deployment
 
