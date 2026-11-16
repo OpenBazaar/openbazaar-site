@@ -15,15 +15,16 @@ served locally. There are no analytics or external page dependencies.
 ## Structure
 
 - `index.html`: homepage, downloads, source references, and resource navigation.
-- `styles.css`: OpenBazaar navy/blue/cyan palette and responsive layout.
+- `styles.css`: dark ink palette with the logo's marketplace blue, and responsive layout.
 - `site.js`: keyboard-accessible screenshot tabs, native screenshot dialog,
-  and an interactive explanation of catalog, order, and payment flow.
-- `assets/`: real testnet4 app captures and geometric artwork based on the tent logo.
+  and the small-screen navigation menu.
+- `assets/`: real testnet4 app captures.
+- `fonts/`: self-hosted Instrument Sans (text) and Bricolage Grotesque (headlines).
 - `paper/`: existing published technical paper, preserved separately.
 - `SOURCE_NOTES.md`: claim verification and asset provenance.
 
 JavaScript adds optional interactions. The base page, product capture,
-protocol notes, downloads, and source links work without it. View Transitions
+protocol notes, downloads, navigation, and source links work without it. View Transitions
 are optional and disabled under the system's reduced-motion preference.
 There are no continuously running animations.
 
