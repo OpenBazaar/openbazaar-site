@@ -1,59 +1,76 @@
 # Homepage evidence and asset provenance
 
-Reviewed November 15, 2026 against the local `openbazaar` repository and its
-tracked source at `b945f4f5a4e2a43b87f2b1d7d857532c1193b969`.
-The homepage links implementation references to that commit. Existing
-v0.1.0-alpha.3 release downloads are preserved; the implementation notes
-describe source architecture, rather than claiming every current source
-feature shipped in that release.
+Reviewed November 15, 2026 against the `v0.1.0-alpha.3` tag (`3a837ae`) of
+OpenBazaar/openbazaar-rs, which is what every download button ships, plus
+`docs/STATUS.md` on main for anything newer. The developer links point at
+`b945f4f5a4e2a43b87f2b1d7d857532c1193b969`, an ancestor of the tag.
+
+The page speaks to buyers and sellers, so each claim below is the plain
+version of a mechanism in the code. If a mechanism changes, change the
+sentence, not just the link.
 
 ## Verified claims
 
-| Homepage subject | Evidence |
+| Homepage claim | Evidence at alpha.3 |
 | --- | --- |
-| Signed store/listing records, BIP 340, content hashes | `crates/protocol/src/store.rs`, `crates/protocol/src/listing.rs`, `docs/paper/sections/catalog.tex` |
-| Tor or loopback sale transport; refused clearnet hosts and redirects | `crates/node/src/peer_http.rs`, `crates/node/src/replicas.rs` |
-| Discovery has a shipped-key trust dependency | `crates/node/src/directory.rs`, `crates/node/src/seeds.rs` |
-| Direct store follows remain possible without introductions | `crates/node/src/main.rs` at the tracked commit (`--no-introductions` usage text) |
-| Buyer/seller MuSig2 aggregation without a moderator spend key | `crates/escrow/src/crypto.rs::aggregate`, `sorted_context` |
-| Silent outcome is the buyer refund, not a vendor payout | `crates/escrow/src/lib.rs` module documentation |
-| Mainnet escrow refused; bonds testnet4 only | `crates/protocol/src/reputation.rs` |
-| 10,000-sat bond, 2,016-block lock, no slash key | `crates/protocol/src/reputation.rs` |
-| Paired home-node access, signed requests, additional spending authorization | `docs/home-node.md`, `docs/home-node-protocol.md` |
-| Shared web client and Tauri desktop shell | Root `README.md`, `apps/mobile/`, `apps/desktop/` |
+| No platform fees; payment goes to a fresh address in the seller's wallet | No fee output anywhere in checkout or payment; BIP 21 per-order address in `crates/node` payment code |
+| No company account; the shop belongs to recovery words | BIP 39 seed with role paths, store key derived from the seed (`crates/node/src/seed.rs`, store record v3) |
+| Storefront name, logo, banner, about, shipping and returns policies | `GET`/`PUT /store/profile` and the storefront editor (`docs/STATUS.md`, "Storefront editor and role") |
+| Physical and digital goods, up to 8 photos, variants, prices in USD/EUR/GBP/JPY, shipping, coupons | Listing v6+ and `docs/listing-parity.md`; coupons and the sales screen in the shop (`Sales.tsx`, Coupons nav) |
+| Mark shipped with carrier, tracking number and a note; buyer sees it on the order | `Sales.tsx` fulfillment form; "shipped" reply carries tracking (`docs/STATUS.md`, "Order delivery") |
+| Escrow holds payment until the buyer confirms; silent seller means refund after the agreed time; either side can dispute; the moderator only picks between two presigned payouts and cannot redirect funds; fee set in advance | `crates/escrow/src/lib.rs` module docs (spend table and timeline), vendor dispute route, moderator record in signed terms |
+| Escrow only when the shop offers it, test network only, off for real bitcoin pending outside review; direct pay has no protection | `Commerce.tsx` (`p.moderated`), `crates/protocol/src/reputation.rs` (`MAINNET_BOND_REFUSAL`) |
+| Address goes to the seller only | Orders sealed with HPKE to the mailbox key in the seller's signed record |
+| Reviews only from buyers, sellers can reply but not edit | `crates/protocol/src/review.rs` (verified-purchase receipts, one signed reply) |
+| Three demo shops | `docs/STATUS.md`, "Catalog served to client" (Marlow Goods, Hale Paper, North Kitchen) |
+| Onboarding: wallet password, then Shop or Sell | `apps/mobile/src/marketplace/Onboarding.tsx` |
+| Test coins from a testnet4 faucet | The app's wallet screen ("Send testnet4 coins from a faucet") |
+| Buyers search the in-app marketplace and can follow a shop directly | On-device search and follows (`docs/STATUS.md`, "Discovery" and "Following stores") |
+| Home node keeps a shop open; Android app manages a shop on a home computer | `docs/home-node.md`, `docs/home-node-mobile.md` |
+| Order messages are coming in the next release | Merged on main in `b130b05`, after the alpha.3 tag; not in the download |
+| No iPhone app | iOS checked only on the simulator (`docs/STATUS.md`) |
 | MIT license | Root `LICENSE` |
 
-`docs/STATUS.md` contains older descriptions that disagree with the present
-transport and discovery code. It was not used to claim that discovery is a
-permissionless DHT, or that current remote trade only works on loopback.
-No claim is made that a seeded public vendor is currently reachable.
-Historical OpenBazaar 2.0 functionality is not attributed to this codebase.
+## Ways to pay
+
+`origin/main` (`9514fad`) adds no payment changes after the alpha.3 tag; the
+four commits since are order messages and localhost pairing.
+
+| Currency | Page status | Evidence |
+| --- | --- | --- |
+| Display prices in USD, EUR, GBP, JPY; buyer pays the matching coin amount at order time | Shipped | Listing v6 fiat price, converted by the seller's node when the order arrives (`docs/STATUS.md`, "Listing v6") |
+| Bitcoin on-chain, from the app wallet or any wallet, testnet4; the only escrow coin | In the app | Checkout "Pay the seller directly" and "Moderated escrow" (`apps/mobile/src/marketplace/Commerce.tsx` at alpha.3); escrow is bitcoin-only (`docs/zcash.md`, "Escrow is refused") |
+| Zcash, direct pay only, Zcash testnet, buyer pays the order QR from any Zcash wallet | In the app, experimental | Desktop app passes `--zec-indexer https://testnet.zec.rocks` by default (`apps/desktop/src-tauri/src/node.rs` at alpha.3); store opt-in under Settings → Zcash; `docs/zcash.md` phases 1–2 done. Experimental because the full loop with a real testnet payment "is still to be run by hand" and pricing needs the rate through the node's Tor proxy |
+| In-app Zcash wallet (balance, pay from the app) | In development | Phase 3 in `docs/zcash.md` ("specified"); uncommitted work on `codex/wallet-multiasset-design` |
+| Monero, direct pay only, stagenet | Needs technical setup | Desktop app turns Monero on only when an `xmr-daemon` file names a monerod (`node.rs`, no default); `docs/STATUS.md` Monero table; remote sellers via #133 (in alpha.3) |
+| Lightning, direct pay only, test networks (Mutinynet signet by default) | In development | Off unless `ob-node serve --lightning`; the desktop app never passes it (`node.rs`); "No completed live payment" (`docs/STATUS.md` LSP row); mainnet refused (`docs/lightning.md`) |
+| No card, PayPal or bank transfer | Shipped (absence) | No such rail in checkout |
+
+Deliberately not claimed: real-money use, user or shop counts, testimonials,
+card payments, automatic tracking updates (seller-side AfterShip setup over
+Tor only), real independent moderators (still a test stand-in), and automatic
+admission of new shops to the shared directory.
 
 ## Visual assets
 
-- The existing `ob-market-logo-256.png` is preserved. Its marketplace blue,
-  approximately `#0d71c8`, is the site accent on a near-black ink palette.
-  The scalloped awning edge on the hero screenshot and download section is
-  drawn in CSS after the awning in the mark.
-- `fonts/bricolage-grotesque-wdth.woff2` is the Latin subset of Bricolage
-  Grotesque (SIL Open Font License 1.1, Google Fonts via Fontsource),
-  self-hosted for headlines.
+- `ob-market-logo-256.png` is the brand mark, used at logo size in the header
+  and footer only.
 - `assets/marketplace.jpg` is copied from
   `output/twitter-teasers/assets/marketplace.jpg` in the main repository.
-- `assets/wallet.jpg` is copied from
-  `output/twitter-teasers/assets/wallet.jpg`.
-- `assets/orders.jpg` is copied from
-  `output/twitter-teasers/assets/payment.jpg`.
-- These are existing app captures with fixture/demo data. The homepage
-  explicitly labels them as alpha captures with demo data and test coins.
-  They are not fabricated product interfaces or evidence of a live market.
-- The NixOS homepage was reviewed for its open-source project navigation,
-  flat blue fields, and large readable type. Its assets were not copied.
+- `assets/sales.jpg` is the top-left 1500 × 800 of
+  `output/sales-console/2026-11-12/sales-console-1920-test-data.png`, the
+  seller's sales screen in the app's dark theme with test orders, from the
+  sales console work in `5b507be` (in alpha.3).
+- Both are real app captures with demo or test data, labeled as such on the
+  page. They are not fabricated interfaces or evidence of a live market.
+- Fonts, all SIL Open Font License 1.1 and self-hosted: Bricolage Grotesque
+  (condensed headlines, Fontsource Latin subset), Instrument Sans (body),
+  IBM Plex Mono 400/500 (labels and figures, Fontsource Latin subset).
+  `newsreader-*.woff2` predates this page and is not referenced.
 
 ## Verification
 
-Check fragment IDs and local asset references, compare all release download
-URLs with the original homepage, run `node --check site.js`, and inspect
-responsive layouts plus the keyboard-operated screenshot tabs and mobile menu.
-The screenshot enlargement uses a native dialog with Escape and close-button
-support. No continuous graphics renderer or animation loop is used.
+HEAD-check every release URL (`curl -sIL`), compare the download set with the
+previous homepage, check fragment IDs and local asset references, run
+`node --check site.js`, check WCAG AA contrast for the palette, and render at
+1440 and 430 wide. The page makes no third-party requests.

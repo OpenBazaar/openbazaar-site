@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#06080d">
-  <title>OpenBazaar: set up shop on a market nobody owns</title>
-  <meta name="description" content="OpenBazaar is a free, open-source app for buying and selling directly. Your store runs on your own computer, you get paid in Bitcoin, and no company sits in the middle. The alpha runs on Bitcoin testnet4.">
+  <meta name="theme-color" content="#06070b">
+  <title>OpenBazaar: your own shop, no fees, no one to shut it down</title>
+  <meta name="description" content="OpenBazaar is a free app for selling from your own storefront and buying directly from independent sellers. No platform fees, no account to suspend, and escrow that holds the buyer’s payment until the order arrives. Pay with Bitcoin, with Zcash and Monero as experimental options. Early test version on test networks.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://openbazaar.org/">
-  <meta property="og:title" content="OpenBazaar: set up shop on a market nobody owns">
-  <meta property="og:description" content="Run your own store, trade directly, get paid in Bitcoin. No company in the middle. Come test the alpha.">
+  <meta property="og:title" content="OpenBazaar: your own shop, no fees, no one to shut it down">
+  <meta property="og:description" content="Sell from your own storefront and buy directly from independent sellers. No platform fees. Payment held until the order arrives. Pay with Bitcoin, with Zcash and Monero as experimental options. Early test version on test networks.">
   <meta property="og:image" content="https://openbazaar.org/ob-market-logo-256.png">
   <link rel="icon" href="ob-market-logo-256.png" type="image/png">
   <link rel="preload" href="fonts/bricolage-grotesque-wdth.woff2" as="font" type="font/woff2" crossorigin>
@@ -24,14 +24,12 @@
       <a class="brand" href="#top"><img src="ob-market-logo-256.png" width="36" height="36" alt=""><span>OpenBazaar</span></a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav-links" hidden>Menu</button>
       <ul id="nav-links" class="nav-links">
-        <li><a href="#explore">Why</a></li>
-        <li><a href="#how-it-works">How it works</a></li>
-        <li><a href="#technology">Under the hood</a></li>
-        <li><a href="#documentation">Docs</a></li>
-        <li><a href="#community">Community</a></li>
-        <li><a href="https://github.com/OpenBazaar/openbazaar-rs">GitHub <span aria-hidden="true">↗</span></a></li>
+        <li><a href="#sell">Selling</a></li>
+        <li><a href="#buy">Buying</a></li>
+        <li><a href="#pay">Ways to pay</a></li>
+        <li><a href="#questions">Questions</a></li>
       </ul>
-      <a class="button button-small" href="#download">Download</a>
+      <a class="button button-small" href="#start">Get the app</a>
     </nav>
   </header>
 
@@ -39,244 +37,285 @@
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-layout wrap">
         <div class="hero-copy">
-          <a class="release-link" href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3"><span class="caution-dot" aria-hidden="true"></span>Alpha 3 is out, on test coins only <span aria-hidden="true">→</span></a>
-          <h1 id="hero-heading">Set up shop on a market nobody owns</h1>
-          <p class="hero-lede">OpenBazaar is a free app for buying and selling directly with other people. Your store runs on your own computer, you get paid in Bitcoin, and there’s no company in the middle to take a cut or close your account.</p>
+          <h1 id="hero-heading">Your own shop. No fees. No one to shut it&nbsp;down.</h1>
+          <p class="hero-lede">OpenBazaar is a free app for selling from your own storefront and buying straight from independent sellers. Pay with Bitcoin, and with escrow your payment is held until the order arrives.</p>
           <div class="actions">
-            <a class="button" href="#download">Download the alpha <span aria-hidden="true">↓</span></a>
-            <a class="button button-quiet" href="#how-it-works">See how it works</a>
+            <a class="button" href="#start">Open a test shop</a>
+            <a class="button button-quiet" href="#buy">How buying works</a>
           </div>
+          <p class="status-note"><span class="status-dot" aria-hidden="true"></span><span><strong>Early test version.</strong> It runs on test coins with no value, so nothing bought or sold is real yet. <a href="#ready">What that means</a></span></p>
         </div>
-
-        <figure class="stall">
-          <div class="awning" aria-hidden="true"></div>
-          <div class="stall-frame">
-            <div class="preview-tabs" role="tablist" aria-label="App screenshots" hidden>
-              <button id="tab-marketplace" type="button" role="tab" aria-selected="true" aria-controls="product-panel" data-screen="marketplace">Marketplace</button>
-              <button id="tab-wallet" type="button" role="tab" aria-selected="false" aria-controls="product-panel" tabindex="-1" data-screen="wallet">Wallet</button>
-              <button id="tab-orders" type="button" role="tab" aria-selected="false" aria-controls="product-panel" tabindex="-1" data-screen="orders">Orders</button>
-            </div>
-            <div id="product-panel" class="product-panel" role="tabpanel" aria-labelledby="tab-marketplace" tabindex="0">
-              <a class="screen-link" href="assets/marketplace.jpg" aria-label="Enlarge the OpenBazaar marketplace screenshot"><img id="product-screen" src="assets/marketplace.jpg" width="1366" height="900" alt="The OpenBazaar desktop alpha: a search bar, categories, and home goods from independent demo stores, priced in test coins." fetchpriority="high"><span class="enlarge-hint" aria-hidden="true">View full size</span></a>
-            </div>
-          </div>
-          <figcaption><span id="screen-caption">Browse stores run by the people who own them</span><span class="caption-meta">Real alpha screenshots, demo stores, test coins</span></figcaption>
+        <figure class="shot shot-hero">
+          <a class="shot-frame" href="assets/marketplace.jpg"><span class="shot-bar" aria-hidden="true"><span>Marketplace</span><span>Testnet4 · demo shops</span></span><span class="shot-screen"><img src="assets/marketplace.jpg" width="1366" height="900" alt="The OpenBazaar desktop app showing home goods from independent demo shops, such as beeswax candles and a stoneware mug, with prices in sats and dollars." fetchpriority="high"></span></a>
+          <figcaption>Browsing demo shops in the desktop app <span>Real screenshot, test coins</span></figcaption>
         </figure>
       </div>
     </section>
 
-    <aside class="alpha-band" aria-label="Release status">
+    <section id="sell" class="section" aria-labelledby="sell-heading">
       <div class="wrap">
-        <p class="alpha-label"><span class="caution-dot" aria-hidden="true"></span>Early alpha</p>
-        <p>This release runs on Bitcoin’s test network, where coins have no value. <strong>Don’t send real bitcoin yet.</strong> Install it, open a test store, break things and tell us what happened.</p>
-        <a href="#release-notes">Read before installing <span aria-hidden="true">→</span></a>
-      </div>
-    </aside>
-
-    <dl class="facts wrap">
-      <div><dt>Who runs the market</dt><dd>The people in it</dd></div>
-      <div><dt>Platform fees</dt><dd>None</dd></div>
-      <div><dt>Accounts to get banned</dt><dd>None</dd></div>
-      <div><dt>Source code</dt><dd><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/main/LICENSE">Open, MIT&nbsp;license&nbsp;<span aria-hidden="true">↗</span></a></dd></div>
-    </dl>
-
-    <section id="explore" class="section split wrap" aria-labelledby="explore-heading">
-      <div class="section-head">
-        <h2 id="explore-heading">Your shop isn’t someone else’s account</h2>
-        <p class="section-intro">Big marketplaces rent you a spot, take a cut of every sale and can switch you off. On OpenBazaar the store is yours, because it runs on your machine.</p>
-        <a class="text-link" href="paper/">Read the design paper <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="points">
-        <article>
-          <h3>It runs on your computer</h3>
-          <p>The app is the store. There’s no sign-up with a company, so there’s no account for anyone to suspend and no platform fee on your sales.</p>
-        </article>
-        <article>
-          <h3>Orders go straight to the seller</h3>
-          <p>Listings are public. Your order, shipping address included, is encrypted for the seller alone and sent over Tor, a network built for privacy.</p>
-        </article>
-        <article>
-          <h3>It can stay open all night</h3>
-          <p>The desktop app keeps your store open while it’s running. For a store that never closes, run the home version on a spare always-on computer and manage it from your phone or laptop.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="how-it-works" class="section trade" aria-labelledby="trade-heading">
-      <div class="wrap">
-        <div class="section-head section-head-wide">
-          <h2 id="trade-heading">How a trade works</h2>
-          <p class="section-intro">Three steps, and nobody holding your money in between.</p>
+        <div class="section-head">
+          <p class="eyebrow">For sellers</p>
+          <h2 id="sell-heading">Sell without a platform in the middle</h2>
+          <p class="section-intro">Big marketplaces take a cut of every sale, can hold your payouts, and can close your shop after a policy change. Here there’s no company account and nobody taking a percentage.</p>
         </div>
-        <div class="trade-layout">
-          <div class="trade-map" role="img" aria-label="Diagram: your app and the seller’s app talk directly. The order travels privately over Tor. Your payment sits locked between you, released only when you both agree. A moderator steps in only for disputes.">
-            <div class="party">
-              <svg class="stall-glyph" viewBox="0 0 40 32" aria-hidden="true"><path d="M3 13 20 4l17 9H3Zm0 0c2 4 5 4 7 0 2 4 5 4 7 0 2 4 5 4 6 0 2 4 5 4 7 0 2 4 5 4 7 0M6 16v13m28-13v13M6 25h28"/></svg>
-              <strong>You</strong><span>Your OpenBazaar app</span>
-            </div>
-            <div class="route route-order"><span>Order, sent privately over Tor</span></div>
-            <div class="lockbox">
-              <svg class="lock-glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 14v-4a7 7 0 0 1 14 0v4M7 14h18v14H7zM16 20v3"/></svg>
-              <strong>Payment locked</strong><span>Released when you both agree</span>
-            </div>
-            <div class="route route-listing"><span>Signed listings and replies</span></div>
-            <div class="party">
-              <svg class="stall-glyph" viewBox="0 0 40 32" aria-hidden="true"><path d="M3 13 20 4l17 9H3Zm0 0c2 4 5 4 7 0 2 4 5 4 7 0 2 4 5 4 6 0 2 4 5 4 7 0 2 4 5 4 7 0M6 16v13m28-13v13M6 25h28"/></svg>
-              <strong>The seller</strong><span>Their own OpenBazaar app</span>
-            </div>
-            <p class="moderator"><strong>Moderator</strong> Only for disputes, and can only choose between payouts you both signed in advance</p>
+        <div class="sell-layout">
+          <div class="sell-points">
+            <article>
+              <h3>No fees on your sales</h3>
+              <p>No listing fees, no percentage, no monthly plan. Just the normal network fee when coins move.</p>
+            </article>
+            <article>
+              <h3>No account to suspend</h3>
+              <p>Your shop belongs to recovery words only you hold, so there’s no review team that can freeze it overnight.</p>
+            </article>
+            <article>
+              <h3>Paid straight to your wallet</h3>
+              <p>Buyers pay into the wallet built into your app. No platform balance, no payout schedule, no reserve.</p>
+            </article>
+            <article>
+              <h3>A storefront that’s yours</h3>
+              <p>Your name, logo, banner and policies, without building or hosting a website.</p>
+            </article>
           </div>
-          <ol class="steps">
-            <li>
-              <h3>Find a store you trust</h3>
-              <p>Every store and listing is signed by the person who posted it, so your app can tell if anything was changed along the way. A signature proves who posted it, not that they’re honest, so look at a store’s history of finished trades too.</p>
-            </li>
-            <li>
-              <h3>Send your order straight to them</h3>
-              <p>Your order goes from your app to theirs, encrypted and routed over Tor. There’s no company server in between storing it or reading it.</p>
-            </li>
-            <li>
-              <h3>Pay in Bitcoin, held safely in between</h3>
-              <p>With escrow, your payment is locked so neither of you can run off with it. It’s released when you both agree. In a dispute, a moderator can only pick between payouts you both approved up front, and if the seller goes quiet you get a refund after an agreed time.</p>
-              <p class="step-note">Escrow works on the test network only for now. You can also pay a seller directly, without that protection.</p>
-            </li>
-          </ol>
+          <figure class="shot">
+            <a class="shot-frame" href="assets/sales.jpg"><span class="shot-bar" aria-hidden="true"><span>Your shop · Sales</span><span>Testnet4 · test orders</span></span><span class="shot-screen"><img src="assets/sales.jpg" width="1500" height="800" alt="The seller’s sales screen in OpenBazaar, listing four test orders with their payment and shipping status and a Fulfill button on the paid ones." loading="lazy"></span></a>
+            <figcaption>Every order in one place: paid, to ship, done <span>Real screenshot, test orders</span></figcaption>
+          </figure>
+        </div>
+        <div class="can-do">
+          <h3>Your shop can</h3>
+          <ul class="chips">
+            <li>Sell physical goods or downloads</li>
+            <li>Show up to 8 photos per listing</li>
+            <li>Offer sizes, colors and other options</li>
+            <li>Price in dollars, euros, pounds or yen</li>
+            <li>Set shipping prices and where you ship</li>
+            <li>Run coupon codes</li>
+            <li>Add tracking numbers</li>
+            <li>Reply to verified reviews</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="technology" class="section split wrap" aria-labelledby="technology-heading">
-      <div class="section-head">
-        <h2 id="technology-heading">Under the hood</h2>
-        <p class="section-intro">For the curious and the skeptical: what the current code actually does, and where its limits are.</p>
-        <a class="text-link" href="https://github.com/OpenBazaar/openbazaar-rs">Inspect the implementation <span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="tech-list">
-        <details><summary><span><small>Identity and data integrity</small><strong>Signed stores and listings</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>BIP 340 Schnorr signatures authenticate canonical record bodies. A listing address is the SHA-256 hash of its body, and an order commits to that address. A signature doesn’t guarantee the goods, the seller, or the latest price.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/protocol/src/listing.rs">Read the record implementation ↗</a></div></details>
-        <details><summary><span><small>Private order transport</small><strong>Tor between trading nodes</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>Sale endpoints accept loopback HTTP or a v3 onion reached through the node’s Tor client. Clearnet sale hosts and redirects away from the onion are refused. This does not make all node traffic anonymous; chain, rate, and optional service configuration also matter.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/node/src/peer_http.rs">Inspect the transport boundary ↗</a></div></details>
-        <details><summary><span><small>Bitcoin escrow, testnet4 only</small><strong>Two spend keys and a bounded moderator</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>Escrow aggregates only the buyer and seller keys into a 2-of-2 MuSig2 Taproot output. The moderator can release a share for a presigned outcome; it has no spend key in the output and cannot choose an arbitrary payout. The silent case is the buyer’s presigned refund at the agreed height.</p><p>Mainnet moderated escrow is refused pending protocol review. Direct pay does not provide escrow protection.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/escrow/src/lib.rs">Read the escrow protocol ↗</a></div></details>
-        <details><summary><span><small>Discovery, with an explicit trust dependency</small><strong>Signed introductions and direct follows</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>Bundled introductions supply directory data verified under a shipped key. That is a discovery trust dependency, not a permissionless DHT. A node can disable introductions and follow a store’s onion address directly; doing so removes directory discovery and announcements.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/node/src/directory.rs">Inspect directory replication ↗</a></div></details>
-        <details><summary><span><small>Self-hosting</small><strong>A home node you can pair with</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>An always-on node exposes a restricted Tor admin service to paired devices. Each device has its own key and signs requests; spending also requires the wallet passphrase and a spend ticket. An optional encrypted LAN channel supports local access.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/home-node.md">Home-node setup and threat model ↗</a></div></details>
-        <details><summary><span><small>Reputation and public proofs</small><strong>A trade count and a time-locked bond</strong></span><span class="detail-symbol" aria-hidden="true">+</span></summary><div><p>Finished escrow payouts contribute to a store’s count. A new seller needs a passing bond to start escrow: at least 10,000 sats locked for at least 2,016 blocks. The bond remains spendable only by the store key after its lock; there is no slash key. These are testnet4 mechanisms.</p><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/protocol/src/reputation.rs">Read the reputation rules ↗</a></div></details>
-        <p class="source-scope">These notes refer to the linked source revision. Packaged alpha releases may lag behind the repository.</p>
-      </div>
-    </section>
-
-    <section id="download" class="download" aria-labelledby="download-heading">
-      <div class="awning awning-wide" aria-hidden="true"></div>
+    <section id="buy" class="section section-sunk" aria-labelledby="buy-heading">
       <div class="wrap">
-        <div class="download-head">
-          <div>
-            <p class="kicker">v0.1.0-alpha.3</p>
-            <h2 id="download-heading">Get in early</h2>
-          </div>
-          <p class="section-intro">The desktop app runs everything itself: open it and you’re on the network, quit and you’re off. Want your store open around the clock? Run the home node on an always-on computer. Every file comes from the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">alpha.3 GitHub release</a>, and you can check yours against <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/SHA256SUMS"><code>SHA256SUMS</code></a>.</p>
+        <div class="section-head">
+          <p class="eyebrow">For buyers</p>
+          <h2 id="buy-heading">Your money waits until it arrives</h2>
+          <p class="section-intro">You buy straight from the seller, and the whole price goes to them. Your protection comes from how the payment works, not from a company deciding to take your side.</p>
         </div>
-        <p id="release-notes" class="notice" role="note"><strong>Expect a warning on first launch</strong> These alpha builds aren’t signed yet. On macOS, open the app once, then go to System Settings → Privacy &amp; Security and choose “Open Anyway” (on older macOS, right-click the app and choose Open). On Windows, choose “More info” then “Run anyway” on the SmartScreen prompt. On Linux, run <code>chmod +x</code> on the AppImage first.</p>
-        <div class="release-table">
+        <ol class="steps">
+          <li>
+            <h3>Order</h3>
+            <p>Check out with your address. It’s sealed so only that seller can read it, and no platform keeps your history.</p>
+          </li>
+          <li>
+            <h3>Pay</h3>
+            <p>Pay with Bitcoin and choose escrow. The payment is locked, so neither side can take it.</p>
+          </li>
+          <li>
+            <h3>Ship</h3>
+            <p>The seller ships and adds the carrier and tracking number to your order.</p>
+          </li>
+          <li>
+            <h3>Confirm</h3>
+            <p>Confirm it arrived to pay the seller. Then leave a review, which only buyers can write.</p>
+          </li>
+        </ol>
+
+        <div class="trouble" aria-labelledby="trouble-heading">
+          <h3 id="trouble-heading">If something goes wrong</h3>
+          <dl>
+            <div>
+              <dt>It never arrives, or isn’t as described</dt>
+              <dd>Open a dispute. The moderator you picked at checkout decides between the two outcomes agreed up front: your money back, or paid to the seller.</dd>
+            </div>
+            <div>
+              <dt>The seller goes silent</dt>
+              <dd>If they never ship and nobody acts, your payment comes back to you after the time agreed at checkout.</dd>
+            </div>
+            <div>
+              <dt>The buyer never confirms</dt>
+              <dd>Sellers can open a dispute too, so a buyer who has the goods can’t simply sit on the money.</dd>
+            </div>
+          </dl>
+          <p class="trouble-note">The moderator can’t take the money, change the amounts or pay anyone else, and their fee is set in advance. Escrow works on the test network today and stays off for real bitcoin until it has had an outside review. Paying a seller directly is quicker, but has none of this protection.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pay" class="section" aria-labelledby="pay-heading">
+      <div class="wrap pay-layout">
+        <div class="section-head">
+          <p class="eyebrow">Ways to pay</p>
+          <h2 id="pay-heading">What you can pay with</h2>
+          <p class="section-intro">Sellers can show prices in dollars, euros, pounds or yen. That’s the price tag. The buyer pays the matching amount in a coin the shop accepts, worked out when the order is placed.</p>
+          <p class="pay-note">Only Bitcoin payments can use escrow. With any other coin you pay the seller directly, without that protection. There’s no card, PayPal or bank transfer.</p>
+        </div>
+        <ul class="coins">
+          <li>
+            <div class="coin-head"><h3>Bitcoin</h3><span class="coin-status is-ready">In the app</span></div>
+            <p>Pay from the wallet built into the app or from any Bitcoin wallet. It’s the only coin that can use escrow.</p>
+            <p class="coin-meta">Test network · Escrow available</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Zcash</h3><span class="coin-status is-trial">In the app, experimental</span></div>
+            <p>A privacy-focused coin. Shops can switch it on, and buyers pay the order’s QR code from any Zcash wallet. A Zcash wallet inside the app is in development.</p>
+            <p class="coin-meta">Zcash test network · No escrow</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Monero</h3><span class="coin-status is-setup">Needs technical setup</span></div>
+            <p>Another privacy-focused coin. It works once the app is connected to a Monero server, which takes manual setup for now.</p>
+            <p class="coin-meta">Monero test network · No escrow</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Lightning</h3><span class="coin-status is-dev">In development</span></div>
+            <p>Fast, small Bitcoin payments. Being tried on home setups, not yet in the desktop app.</p>
+            <p class="coin-meta">Bitcoin test network · No escrow</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="questions" class="section section-sunk" aria-labelledby="questions-heading">
+      <div class="wrap faq-layout">
+        <div class="section-head">
+          <h2 id="questions-heading">Honest answers</h2>
+          <p class="section-intro">What you’d want to know before you install anything.</p>
+        </div>
+        <div class="faq">
+          <details id="ready" open>
+            <summary>Can I use it for real sales today?</summary>
+            <p>No. This is an early test version (alpha 3) that runs on test networks, where coins are free and worth nothing. Set up a shop, place test orders and tell us what’s missing, but don’t send it real money.</p>
+          </details>
+          <details>
+            <summary>Who else is on it?</summary>
+            <p>Very few people so far: three demo shops so you can try a whole order, plus shops opened by other early testers. Open one now and you’re among the first, and what you ask for shapes what gets built.</p>
+          </details>
+          <details>
+            <summary>How will buyers find my shop?</summary>
+            <p>Buyers browse and search the marketplace inside the app, and can follow a shop directly. There are no ads or promoted listings, so early on your best customers are the ones you bring.</p>
+          </details>
+          <details>
+            <summary>Does my computer have to stay on?</summary>
+            <p>Your shop takes orders while the app is running. To stay open around the clock, run the home version on a spare always-on computer and manage it from your laptop or Android phone.</p>
+          </details>
+          <details>
+            <summary>Can buyers and sellers message each other?</summary>
+            <p>Messages inside each order are built and coming in the next release. For now the seller can add a note when they mark an order shipped.</p>
+          </details>
+          <details>
+            <summary>What if I lose my computer?</summary>
+            <p>Your shop and wallet come from a set of recovery words, not a company account. Write them down and keep them safe. Nobody can reset them for you.</p>
+          </details>
+          <details>
+            <summary>Is there a phone app?</summary>
+            <p>There’s an Android app for managing a shop that runs on a home computer, installed from the file below rather than Google Play. There’s no iPhone app yet.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="start" class="section start" aria-labelledby="start-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Version 0.1.0 alpha 3</p>
+          <h2 id="start-heading">Try it today, with test coins</h2>
+          <p class="section-intro">One app does everything, with no sign-up. Open it and your shop is open, quit and it closes.</p>
+        </div>
+        <div class="paths">
+          <article>
+            <h3>Open a shop</h3>
+            <ol>
+              <li>Install the app and set a wallet password.</li>
+              <li>Choose “Sell” and add your shop’s name, logo and policies.</li>
+              <li>List something with photos and a price.</li>
+            </ol>
+          </article>
+          <article>
+            <h3>Try buying</h3>
+            <ol>
+              <li>Install the app, set a wallet password and choose “Shop”.</li>
+              <li>Get free test coins from a testnet4 faucet and send them to the app’s wallet.</li>
+              <li>Place a test order from one of the demo shops.</li>
+            </ol>
+          </article>
+        </div>
+
+        <p id="release-notes" class="notice" role="note"><strong>Your computer will warn you the first time</strong> These test builds aren’t signed yet. On macOS, open the app once, then go to System Settings → Privacy &amp; Security and choose “Open Anyway” (on older macOS, right-click the app and choose Open). On Windows, choose “More info”, then “Run anyway”. On Linux, make the AppImage executable with <code>chmod +x</code> first.</p>
+
+        <div class="release-table" aria-label="Downloads">
           <article class="release-row">
             <h3>macOS</h3>
-            <p>Desktop app for Apple silicon and Intel</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_universal.dmg">Download .dmg <span class="dl-size">76 MiB</span></a>
-            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_universal.app.zip">zipped .app</a></p>
+            <p>Apple silicon and Intel</p>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_universal.dmg">Download for Mac <span class="dl-size">79 MB</span></a>
+            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_universal.app.zip">zipped app</a></p>
           </article>
           <article class="release-row">
             <h3>Windows</h3>
-            <p>Desktop app for 64-bit Windows</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_x64-setup.exe">Download installer <span class="dl-size">28 MiB</span></a>
-            <p class="dl-alt">Unsigned, see the note above</p>
+            <p>64-bit Windows</p>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_x64-setup.exe">Download for Windows <span class="dl-size">29 MB</span></a>
+            <p class="dl-alt">Installer, see the warning note above</p>
           </article>
           <article class="release-row">
             <h3>Linux</h3>
-            <p>Desktop app for x86_64</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_amd64.AppImage">Download .AppImage <span class="dl-size">117 MiB</span></a>
+            <p>x86_64</p>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_amd64.AppImage">Download AppImage <span class="dl-size">122 MB</span></a>
             <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_amd64.deb">.deb for Debian and Ubuntu</a></p>
           </article>
-          <article class="release-row">
-            <h3>Android</h3>
-            <p>Direct APK, sideloading required</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_android.apk">Download .apk <span class="dl-size">84 MiB</span></a>
-            <p class="dl-alt"><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_android.apk.sha256">APK checksum</a></p>
-          </article>
         </div>
+
         <div class="release-extras">
           <article>
-            <h3>Home node</h3>
-            <p>Keeps your store online around the clock, managed from your other devices over Tor. Each archive includes <code>home-node.md</code> with setup and pairing steps.</p>
+            <h3>Keep your shop open around the clock</h3>
+            <p>Run the home version on a spare always-on computer. Each download includes a setup guide, <code>home-node.md</code>.</p>
             <ul class="dl-list">
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-x86_64.tar.gz">Linux x86_64</a> <span>34 MiB</span></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-arm64.tar.gz">Linux arm64</a> <span>35 MiB</span></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_macos-universal.tar.gz">macOS universal</a> <span>57 MiB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-x86_64.tar.gz">Linux x86_64</a> <span>35 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-arm64.tar.gz">Linux arm64</a> <span>36 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_macos-universal.tar.gz">macOS</a> <span>59 MB</span></li>
             </ul>
             <p class="dl-alt">Docker: <code>ghcr.io/openbazaar/ob-node:0.1.0-alpha.3</code></p>
           </article>
           <article>
-            <h3>Check the release</h3>
-            <p>Verify a download before you run it, or build it yourself from source.</p>
+            <h3>Android</h3>
+            <p>Manage a shop that runs on your home computer. Installed from the file, so your phone will ask you to allow it.</p>
             <ul class="dl-list">
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/SHA256SUMS">SHA256SUMS</a></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">Full release notes</a></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs">openbazaar-rs on GitHub</a></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_android.apk">Download the APK</a> <span>88 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_android.apk.sha256">APK checksum</a></li>
             </ul>
-            <p class="dl-alt">Alpha software on testnet4. Expect bugs and back up your data.</p>
           </article>
         </div>
+        <p class="verify-line">Every file comes from the official release. Check yours against <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/SHA256SUMS">SHA256SUMS</a>, or read the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">full release notes</a>.</p>
       </div>
     </section>
 
-    <section id="documentation" class="section wrap" aria-labelledby="developers-heading">
-      <div class="section-head section-head-wide">
-        <h2 id="developers-heading">All of it is out in the open</h2>
-        <p class="section-intro">The code, the protocol and the paper are public. Dig in as far as you like, and send a fix when you find something.</p>
-      </div>
-      <div class="developer-layout">
-        <div class="source-map">
-          <div class="source-map-header"><span>OpenBazaar/openbazaar-rs</span><a href="https://github.com/OpenBazaar/openbazaar-rs">Browse repository <span aria-hidden="true">↗</span></a></div>
-          <dl>
-            <div><dt><a href="https://github.com/OpenBazaar/openbazaar-rs/tree/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/protocol">crates/protocol/</a></dt><dd>Records, signatures, encoding</dd></div>
-            <div><dt><a href="https://github.com/OpenBazaar/openbazaar-rs/tree/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/escrow">crates/escrow/</a></dt><dd>Two-party escrow protocol</dd></div>
-            <div><dt><a href="https://github.com/OpenBazaar/openbazaar-rs/tree/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/crates/node">crates/node/</a></dt><dd>Wallet, transport, trade state</dd></div>
-            <div><dt><a href="https://github.com/OpenBazaar/openbazaar-rs/tree/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/apps/mobile">apps/mobile/</a></dt><dd>Shared marketplace interface</dd></div>
-            <div><dt><a href="https://github.com/OpenBazaar/openbazaar-rs/tree/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/apps/desktop">apps/desktop/</a></dt><dd>Tauri desktop shell</dd></div>
-          </dl>
-          <p>MIT licensed. No proprietary client required.</p>
+    <section id="developers" class="developers" aria-labelledby="developers-heading">
+      <div class="wrap developers-layout">
+        <div>
+          <h2 id="developers-heading">For developers and the curious</h2>
+          <p>OpenBazaar is open source under the MIT license. The design paper explains how payments, escrow and privacy work, including the limits.</p>
         </div>
-        <div class="resources">
-          <a href="paper/"><span><strong>The design paper</strong><small>Architecture, escrow, privacy and limitations</small></span><span aria-hidden="true">→</span></a>
-          <a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/home-node.md"><span><strong>Run a home node</strong><small>Pairing, deployment, recovery and threat model</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/escrow-review-packet.md"><span><strong>Review the escrow</strong><small>Protocol review material and known blockers</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/OpenBazaar/openbazaar-rs#readme"><span><strong>Development setup</strong><small>Build the node, test the client, find your way around</small></span><span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-    </section>
-
-    <section id="community" class="community" aria-labelledby="community-heading">
-      <div class="wrap community-layout">
-        <div class="community-title">
-          <img class="community-mark" src="ob-market-logo-256.png" width="96" height="96" alt="">
-          <h2 id="community-heading">Be one of the first stores on the network</h2>
-        </div>
-        <div class="community-body">
-          <p>Every store that opens makes OpenBazaar more worth visiting for the next person. Install the alpha, open a test store, buy something with test coins and tell us what broke. The people testing now are shaping what ships.</p>
-          <div class="actions">
-            <a class="button" href="#download">Download the alpha <span aria-hidden="true">↓</span></a>
-            <a class="button button-quiet" href="https://github.com/OpenBazaar/openbazaar-rs/issues">Report an issue <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
+        <ul class="dev-links">
+          <li><a href="paper/">Design paper</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/home-node.md">Home node guide</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/escrow-review-packet.md">Escrow review notes</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Send feedback</a></li>
+        </ul>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-grid">
-      <div><a class="brand" href="#top"><img src="ob-market-logo-256.png" width="32" height="32" alt=""><span>OpenBazaar</span></a><p>A market nobody owns</p></div>
-      <div><h3>Use it</h3><a href="#download">Download the alpha</a><a href="#how-it-works">How it works</a><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/home-node.md">Run a home node</a></div>
-      <div><h3>Understand it</h3><a href="#technology">Under the hood</a><a href="paper/">Design paper</a><a href="paper/openbazaar.pdf">Paper as PDF</a></div>
-      <div><h3>Build it</h3><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code ↗</a><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Issues ↗</a><a href="https://github.com/OpenBazaar/openbazaar-rs/pulls">Contribute code ↗</a><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/main/LICENSE">MIT license ↗</a></div>
+      <div><a class="brand" href="#top"><img src="ob-market-logo-256.png" width="32" height="32" alt=""><span>OpenBazaar</span></a><p>Your own shop. No fees. No one to shut it down.</p></div>
+      <div><h3>Use it</h3><a href="#start">Get the app</a><a href="#sell">Selling</a><a href="#buy">Buying</a><a href="#pay">Ways to pay</a><a href="#questions">Questions</a></div>
+      <div><h3>Learn more</h3><a href="paper/">Design paper</a><a href="paper/openbazaar.pdf">Paper as PDF</a><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">Release notes</a></div>
+      <div><h3>Get involved</h3><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Feedback and issues</a><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/main/LICENSE">MIT license</a></div>
     </div>
-    <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Alpha on Bitcoin testnet4. Don’t use real bitcoin.</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
+    <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Test version on test networks. Don’t use real money.</span><a href="#top">Back to top</a></div>
   </footer>
-
-  <dialog id="screen-dialog" aria-labelledby="dialog-heading"><div class="dialog-bar"><h2 id="dialog-heading">OpenBazaar desktop alpha</h2><form method="dialog"><button type="submit" aria-label="Close screenshot">Close</button></form></div><img id="dialog-screen" src="assets/marketplace.jpg" width="1366" height="900" alt=""><p>Real app screenshot with demo data. Testnet4 coins have no value.</p></dialog>
 </body>
 </html>
