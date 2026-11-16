@@ -31,11 +31,25 @@ sentence, not just the link.
 | No iPhone app | iOS checked only on the simulator (`docs/STATUS.md`) |
 | MIT license | Root `LICENSE` |
 
+## Ways to pay
+
+`origin/main` (`9514fad`) adds no payment changes after the alpha.3 tag; the
+four commits since are order messages and localhost pairing.
+
+| Currency | Page status | Evidence |
+| --- | --- | --- |
+| Display prices in USD, EUR, GBP, JPY; buyer pays the matching coin amount at order time | Shipped | Listing v6 fiat price, converted by the seller's node when the order arrives (`docs/STATUS.md`, "Listing v6") |
+| Bitcoin on-chain, from the app wallet or any wallet, testnet4; the only escrow coin | In the app | Checkout "Pay the seller directly" and "Moderated escrow" (`apps/mobile/src/marketplace/Commerce.tsx` at alpha.3); escrow is bitcoin-only (`docs/zcash.md`, "Escrow is refused") |
+| Zcash, direct pay only, Zcash testnet, buyer pays the order QR from any Zcash wallet | In the app, experimental | Desktop app passes `--zec-indexer https://testnet.zec.rocks` by default (`apps/desktop/src-tauri/src/node.rs` at alpha.3); store opt-in under Settings → Zcash; `docs/zcash.md` phases 1–2 done. Experimental because the full loop with a real testnet payment "is still to be run by hand" and pricing needs the rate through the node's Tor proxy |
+| In-app Zcash wallet (balance, pay from the app) | In development | Phase 3 in `docs/zcash.md` ("specified"); uncommitted work on `codex/wallet-multiasset-design` |
+| Monero, direct pay only, stagenet | Needs technical setup | Desktop app turns Monero on only when an `xmr-daemon` file names a monerod (`node.rs`, no default); `docs/STATUS.md` Monero table; remote sellers via #133 (in alpha.3) |
+| Lightning, direct pay only, test networks (Mutinynet signet by default) | In development | Off unless `ob-node serve --lightning`; the desktop app never passes it (`node.rs`); "No completed live payment" (`docs/STATUS.md` LSP row); mainnet refused (`docs/lightning.md`) |
+| No card, PayPal or bank transfer | Shipped (absence) | No such rail in checkout |
+
 Deliberately not claimed: real-money use, user or shop counts, testimonials,
 card payments, automatic tracking updates (seller-side AfterShip setup over
-Tor only), real independent moderators (still a test stand-in), automatic
-admission of new shops to the shared directory, and the experimental Monero,
-Zcash and Lightning direct-pay options.
+Tor only), real independent moderators (still a test stand-in), and automatic
+admission of new shops to the shared directory.
 
 ## Visual assets
 
@@ -43,10 +57,10 @@ Zcash and Lightning direct-pay options.
   and footer only.
 - `assets/marketplace.jpg` is copied from
   `output/twitter-teasers/assets/marketplace.jpg` in the main repository.
-- `assets/sales.jpg` is the top 1366 × 800 of
-  `output/sales-console/2026-11-12/sales-console-1366-test-data.png`, the
-  seller's sales screen with test orders, from the sales console work in
-  `5b507be` (in alpha.3).
+- `assets/sales.jpg` is the top-left 1500 × 800 of
+  `output/sales-console/2026-11-12/sales-console-1920-test-data.png`, the
+  seller's sales screen in the app's dark theme with test orders, from the
+  sales console work in `5b507be` (in alpha.3).
 - Both are real app captures with demo or test data, labeled as such on the
   page. They are not fabricated interfaces or evidence of a live market.
 - Fonts, all SIL Open Font License 1.1 and self-hosted: Bricolage Grotesque

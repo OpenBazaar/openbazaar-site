@@ -6,11 +6,11 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#06070b">
   <title>OpenBazaar: your own shop, no fees, no one to shut it down</title>
-  <meta name="description" content="OpenBazaar is a free app for selling from your own storefront and buying directly from independent sellers. No platform fees, no account to suspend, and escrow that holds the buyer’s payment until the order arrives. Early test version on practice bitcoin.">
+  <meta name="description" content="OpenBazaar is a free app for selling from your own storefront and buying directly from independent sellers. No platform fees, no account to suspend, and escrow that holds the buyer’s payment until the order arrives. Pay with Bitcoin, with Zcash and Monero as experimental options. Early test version on test networks.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://openbazaar.org/">
   <meta property="og:title" content="OpenBazaar: your own shop, no fees, no one to shut it down">
-  <meta property="og:description" content="Sell from your own storefront and buy directly from independent sellers. No platform fees. Payment held until the order arrives. Early test version on practice bitcoin.">
+  <meta property="og:description" content="Sell from your own storefront and buy directly from independent sellers. No platform fees. Payment held until the order arrives. Pay with Bitcoin, with Zcash and Monero as experimental options. Early test version on test networks.">
   <meta property="og:image" content="https://openbazaar.org/ob-market-logo-256.png">
   <link rel="icon" href="ob-market-logo-256.png" type="image/png">
   <link rel="preload" href="fonts/bricolage-grotesque-wdth.woff2" as="font" type="font/woff2" crossorigin>
@@ -26,7 +26,7 @@
       <ul id="nav-links" class="nav-links">
         <li><a href="#sell">Selling</a></li>
         <li><a href="#buy">Buying</a></li>
-        <li><a href="#orders">If something goes wrong</a></li>
+        <li><a href="#pay">Ways to pay</a></li>
         <li><a href="#questions">Questions</a></li>
       </ul>
       <a class="button button-small" href="#start">Get the app</a>
@@ -38,12 +38,12 @@
       <div class="hero-layout wrap">
         <div class="hero-copy">
           <h1 id="hero-heading">Your own shop. No fees. No one to shut it&nbsp;down.</h1>
-          <p class="hero-lede">OpenBazaar is a free app for selling from your own storefront and buying straight from independent sellers. Buyers pay in Bitcoin, and with escrow the payment is held until the order arrives.</p>
+          <p class="hero-lede">OpenBazaar is a free app for selling from your own storefront and buying straight from independent sellers. Pay with Bitcoin, and with escrow your payment is held until the order arrives.</p>
           <div class="actions">
             <a class="button" href="#start">Open a test shop</a>
             <a class="button button-quiet" href="#buy">How buying works</a>
           </div>
-          <p class="status-note"><span class="status-dot" aria-hidden="true"></span><span><strong>Early test version.</strong> It runs on practice bitcoin with no value, so nothing bought or sold is real yet. <a href="#ready">What that means</a></span></p>
+          <p class="status-note"><span class="status-dot" aria-hidden="true"></span><span><strong>Early test version.</strong> It runs on test coins with no value, so nothing bought or sold is real yet. <a href="#ready">What that means</a></span></p>
         </div>
         <figure class="shot shot-hero">
           <a class="shot-frame" href="assets/marketplace.jpg"><span class="shot-bar" aria-hidden="true"><span>Marketplace</span><span>Testnet4 · demo shops</span></span><span class="shot-screen"><img src="assets/marketplace.jpg" width="1366" height="900" alt="The OpenBazaar desktop app showing home goods from independent demo shops, such as beeswax candles and a stoneware mug, with prices in sats and dollars." fetchpriority="high"></span></a>
@@ -57,44 +57,44 @@
         <div class="section-head">
           <p class="eyebrow">For sellers</p>
           <h2 id="sell-heading">Sell without a platform in the middle</h2>
-          <p class="section-intro">Big marketplaces take a cut of every sale, can hold your payouts, and can close your shop after a policy change. On OpenBazaar there’s no company account and nobody taking a percentage.</p>
+          <p class="section-intro">Big marketplaces take a cut of every sale, can hold your payouts, and can close your shop after a policy change. Here there’s no company account and nobody taking a percentage.</p>
         </div>
-        <div class="benefits">
-          <article>
-            <h3>No fees on your sales</h3>
-            <p>No listing fees, no percentage of each sale, no monthly plan. The only cost is the normal Bitcoin network fee when coins are sent.</p>
-          </article>
-          <article>
-            <h3>No account to suspend</h3>
-            <p>Your shop belongs to recovery words that only you hold, not to an account at a company. There’s no review team that can freeze it overnight.</p>
-          </article>
-          <article>
-            <h3>Paid straight to your wallet</h3>
-            <p>Each buyer pays a fresh address in the wallet built into your app. No platform balance, no payout schedule, no reserve held back.</p>
-          </article>
-          <article>
-            <h3>A storefront that’s yours</h3>
-            <p>Your name, logo, banner, about page and shipping and returns policies, without building or hosting a website.</p>
-          </article>
-        </div>
-        <div class="feature-split">
-          <div>
-            <h3 class="list-title">What your shop can do today</h3>
-            <ul class="checklist">
-              <li>Sell physical goods or digital downloads</li>
-              <li>Up to eight photos per listing, plus sizes, colors and other options</li>
-              <li>Set prices in dollars, euros, pounds or yen. Buyers pay the bitcoin amount when they order</li>
-              <li>Shipping prices and the countries you ship to</li>
-              <li>Coupon codes</li>
-              <li>One sales screen for what’s paid, what to ship and what’s done</li>
-              <li>Mark an order shipped with the carrier, tracking number and a note</li>
-              <li>Reviews from verified buyers, which you can reply to</li>
-            </ul>
+        <div class="sell-layout">
+          <div class="sell-points">
+            <article>
+              <h3>No fees on your sales</h3>
+              <p>No listing fees, no percentage, no monthly plan. Just the normal network fee when coins move.</p>
+            </article>
+            <article>
+              <h3>No account to suspend</h3>
+              <p>Your shop belongs to recovery words only you hold, so there’s no review team that can freeze it overnight.</p>
+            </article>
+            <article>
+              <h3>Paid straight to your wallet</h3>
+              <p>Buyers pay into the wallet built into your app. No platform balance, no payout schedule, no reserve.</p>
+            </article>
+            <article>
+              <h3>A storefront that’s yours</h3>
+              <p>Your name, logo, banner and policies, without building or hosting a website.</p>
+            </article>
           </div>
           <figure class="shot">
-            <a class="shot-frame" href="assets/sales.jpg"><span class="shot-bar" aria-hidden="true"><span>Your shop · Sales</span><span>Testnet4 · test orders</span></span><span class="shot-screen"><img src="assets/sales.jpg" width="1366" height="800" alt="The seller’s sales screen in OpenBazaar, listing four test orders with their payment and shipping status and a Fulfill button on the paid ones." loading="lazy"></span></a>
-            <figcaption>The sales screen in your shop <span>Real screenshot, test orders</span></figcaption>
+            <a class="shot-frame" href="assets/sales.jpg"><span class="shot-bar" aria-hidden="true"><span>Your shop · Sales</span><span>Testnet4 · test orders</span></span><span class="shot-screen"><img src="assets/sales.jpg" width="1500" height="800" alt="The seller’s sales screen in OpenBazaar, listing four test orders with their payment and shipping status and a Fulfill button on the paid ones." loading="lazy"></span></a>
+            <figcaption>Every order in one place: paid, to ship, done <span>Real screenshot, test orders</span></figcaption>
           </figure>
+        </div>
+        <div class="can-do">
+          <h3>Your shop can</h3>
+          <ul class="chips">
+            <li>Sell physical goods or downloads</li>
+            <li>Show up to 8 photos per listing</li>
+            <li>Offer sizes, colors and other options</li>
+            <li>Price in dollars, euros, pounds or yen</li>
+            <li>Set shipping prices and where you ship</li>
+            <li>Run coupon codes</li>
+            <li>Add tracking numbers</li>
+            <li>Reply to verified reviews</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -103,48 +103,25 @@
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">For buyers</p>
-          <h2 id="buy-heading">Buy directly from independent shops</h2>
-          <p class="section-intro">Your order goes to the seller, not through a platform, and the whole price goes to them. The protections below come from how payment works, not from a company deciding to take your side.</p>
-        </div>
-        <div class="benefits benefits-three">
-          <article>
-            <h3>Your money waits until it arrives</h3>
-            <p>When a shop offers escrow, choose it at checkout and your payment is locked until you confirm the order arrived. The seller can’t take it before then, and if they never ship, it comes back to you after the agreed time.</p>
-          </article>
-          <article>
-            <h3>Your address goes to the seller only</h3>
-            <p>Your order is sealed so only that seller can read it. There’s no platform building a history of what you buy, and this site has no trackers.</p>
-          </article>
-          <article>
-            <h3>Reviews from people who paid</h3>
-            <p>Only someone who bought the item can review it, and the seller can reply but can’t edit what they wrote.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="orders" class="section" aria-labelledby="orders-heading">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">How an order works</p>
-          <h2 id="orders-heading">Four steps, and a plan for when things go wrong</h2>
+          <h2 id="buy-heading">Your money waits until it arrives</h2>
+          <p class="section-intro">You buy straight from the seller, and the whole price goes to them. Your protection comes from how the payment works, not from a company deciding to take your side.</p>
         </div>
         <ol class="steps">
           <li>
             <h3>Order</h3>
-            <p>Pick something from a shop, add your address and choose escrow at checkout.</p>
+            <p>Check out with your address. It’s sealed so only that seller can read it, and no platform keeps your history.</p>
           </li>
           <li>
             <h3>Pay</h3>
-            <p>Pay the bitcoin amount from the app’s wallet or any other wallet. With escrow it’s locked, so neither side can take it.</p>
+            <p>Pay with Bitcoin and choose escrow. The payment is locked, so neither side can take it.</p>
           </li>
           <li>
             <h3>Ship</h3>
-            <p>The seller sees the paid order, ships it and adds the carrier and tracking number to your order.</p>
+            <p>The seller ships and adds the carrier and tracking number to your order.</p>
           </li>
           <li>
             <h3>Confirm</h3>
-            <p>When it arrives, confirm the order. That releases the payment to the seller, and you can leave a review.</p>
+            <p>Confirm it arrived to pay the seller. Then leave a review, which only buyers can write.</p>
           </li>
         </ol>
 
@@ -152,24 +129,53 @@
           <h3 id="trouble-heading">If something goes wrong</h3>
           <dl>
             <div>
-              <dt>The package never arrives, or isn’t what was described</dt>
-              <dd>Open a dispute before the deadline. The moderator you picked at checkout chooses between the two outcomes you and the seller agreed to up front: your money back, or paid to the seller.</dd>
+              <dt>It never arrives, or isn’t as described</dt>
+              <dd>Open a dispute. The moderator you picked at checkout decides between the two outcomes agreed up front: your money back, or paid to the seller.</dd>
             </div>
             <div>
               <dt>The seller goes silent</dt>
-              <dd>If the seller never ships and nobody acts, the payment returns to you after the time agreed at checkout.</dd>
+              <dd>If they never ship and nobody acts, your payment comes back to you after the time agreed at checkout.</dd>
             </div>
             <div>
-              <dt>The buyer got it but never confirms</dt>
-              <dd>Sellers can open a dispute too, and the moderator can release the payment to them.</dd>
-            </div>
-            <div>
-              <dt>What the moderator can’t do</dt>
-              <dd>Take the money, change the amounts or pay anyone else. They only pick one of the two payouts you both signed. Their fee is set in advance and only applies if they have to rule.</dd>
+              <dt>The buyer never confirms</dt>
+              <dd>Sellers can open a dispute too, so a buyer who has the goods can’t simply sit on the money.</dd>
             </div>
           </dl>
-          <p class="trouble-note">Escrow works on the test network today. It stays off for real bitcoin until the payment system has had an outside review. You can also pay a seller directly, which is quicker but has none of this protection.</p>
+          <p class="trouble-note">The moderator can’t take the money, change the amounts or pay anyone else, and their fee is set in advance. Escrow works on the test network today and stays off for real bitcoin until it has had an outside review. Paying a seller directly is quicker, but has none of this protection.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="pay" class="section" aria-labelledby="pay-heading">
+      <div class="wrap pay-layout">
+        <div class="section-head">
+          <p class="eyebrow">Ways to pay</p>
+          <h2 id="pay-heading">What you can pay with</h2>
+          <p class="section-intro">Sellers can show prices in dollars, euros, pounds or yen. That’s the price tag. The buyer pays the matching amount in a coin the shop accepts, worked out when the order is placed.</p>
+          <p class="pay-note">Only Bitcoin payments can use escrow. With any other coin you pay the seller directly, without that protection. There’s no card, PayPal or bank transfer.</p>
+        </div>
+        <ul class="coins">
+          <li>
+            <div class="coin-head"><h3>Bitcoin</h3><span class="coin-status is-ready">In the app</span></div>
+            <p>Pay from the wallet built into the app or from any Bitcoin wallet. It’s the only coin that can use escrow.</p>
+            <p class="coin-meta">Test network · Escrow available</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Zcash</h3><span class="coin-status is-trial">In the app, experimental</span></div>
+            <p>A privacy-focused coin. Shops can switch it on, and buyers pay the order’s QR code from any Zcash wallet. A Zcash wallet inside the app is in development.</p>
+            <p class="coin-meta">Zcash test network · No escrow</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Monero</h3><span class="coin-status is-setup">Needs technical setup</span></div>
+            <p>Another privacy-focused coin. It works once the app is connected to a Monero server, which takes manual setup for now.</p>
+            <p class="coin-meta">Monero test network · No escrow</p>
+          </li>
+          <li>
+            <div class="coin-head"><h3>Lightning</h3><span class="coin-status is-dev">In development</span></div>
+            <p>Fast, small Bitcoin payments. Being tried on home setups, not yet in the desktop app.</p>
+            <p class="coin-meta">Bitcoin test network · No escrow</p>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -177,40 +183,32 @@
       <div class="wrap faq-layout">
         <div class="section-head">
           <h2 id="questions-heading">Honest answers</h2>
-          <p class="section-intro">The things you’d want to know before you install anything.</p>
+          <p class="section-intro">What you’d want to know before you install anything.</p>
         </div>
         <div class="faq">
           <details id="ready" open>
             <summary>Can I use it for real sales today?</summary>
-            <p>No. This is an early test version (alpha 3). It runs on Bitcoin’s test network, where coins are free and worth nothing. Use it to set up a shop, place test orders and tell us what’s missing. Don’t send real bitcoin to it.</p>
+            <p>No. This is an early test version (alpha 3) that runs on test networks, where coins are free and worth nothing. Set up a shop, place test orders and tell us what’s missing, but don’t send it real money.</p>
           </details>
           <details>
             <summary>Who else is on it?</summary>
-            <p>Very few people so far. The app comes with three demo shops so you can try a whole order, plus whatever shops other early testers have opened. If you open a shop now, you’re one of the first.</p>
-          </details>
-          <details>
-            <summary>Do buyers need bitcoin? Can they pay by card?</summary>
-            <p>Payment is in Bitcoin, from the wallet built into the app or any other Bitcoin wallet. There’s no card or PayPal checkout. During the test you use free test coins from a testnet4 faucet.</p>
-          </details>
-          <details>
-            <summary>What does it cost?</summary>
-            <p>The app is free, and OpenBazaar takes nothing from any sale. You pay the normal Bitcoin network fee when coins move. If an escrow order goes to a dispute, the moderator’s fee, set in advance, comes out of the payout.</p>
+            <p>Very few people so far: three demo shops so you can try a whole order, plus shops opened by other early testers. Open one now and you’re among the first, and what you ask for shapes what gets built.</p>
           </details>
           <details>
             <summary>How will buyers find my shop?</summary>
-            <p>Buyers browse and search the marketplace inside the app, and can follow a shop directly. There are no ads or promoted listings, so early on your best customers are the ones you bring with you.</p>
+            <p>Buyers browse and search the marketplace inside the app, and can follow a shop directly. There are no ads or promoted listings, so early on your best customers are the ones you bring.</p>
           </details>
           <details>
             <summary>Does my computer have to stay on?</summary>
-            <p>Your shop takes orders while the app is running. To keep it open around the clock, run the home version on a spare always-on computer and manage it from your laptop or Android phone.</p>
+            <p>Your shop takes orders while the app is running. To stay open around the clock, run the home version on a spare always-on computer and manage it from your laptop or Android phone.</p>
           </details>
           <details>
             <summary>Can buyers and sellers message each other?</summary>
-            <p>Messages inside each order are built and coming in the next release. In this version the seller can add a note for the buyer when they mark an order shipped.</p>
+            <p>Messages inside each order are built and coming in the next release. For now the seller can add a note when they mark an order shipped.</p>
           </details>
           <details>
             <summary>What if I lose my computer?</summary>
-            <p>Your shop and wallet come from a set of recovery words, not a company account. Write them down and keep them somewhere safe. There’s no company that can reset them for you.</p>
+            <p>Your shop and wallet come from a set of recovery words, not a company account. Write them down and keep them safe. Nobody can reset them for you.</p>
           </details>
           <details>
             <summary>Is there a phone app?</summary>
@@ -225,23 +223,21 @@
         <div class="section-head">
           <p class="eyebrow">Version 0.1.0 alpha 3</p>
           <h2 id="start-heading">Try it today, with test coins</h2>
-          <p class="section-intro">One app does everything. Open it and your shop is open, quit and it closes. There’s no sign-up.</p>
+          <p class="section-intro">One app does everything, with no sign-up. Open it and your shop is open, quit and it closes.</p>
         </div>
         <div class="paths">
           <article>
             <h3>Open a shop</h3>
             <ol>
-              <li>Download the app for your computer below.</li>
-              <li>Set a wallet password, then choose “Sell”.</li>
-              <li>Add your shop’s name, logo and policies.</li>
+              <li>Install the app and set a wallet password.</li>
+              <li>Choose “Sell” and add your shop’s name, logo and policies.</li>
               <li>List something with photos and a price.</li>
             </ol>
           </article>
           <article>
             <h3>Try buying</h3>
             <ol>
-              <li>Download the app for your computer below.</li>
-              <li>Set a wallet password, then choose “Shop”.</li>
+              <li>Install the app, set a wallet password and choose “Shop”.</li>
               <li>Get free test coins from a testnet4 faucet and send them to the app’s wallet.</li>
               <li>Place a test order from one of the demo shops.</li>
             </ol>
@@ -274,7 +270,7 @@
         <div class="release-extras">
           <article>
             <h3>Keep your shop open around the clock</h3>
-            <p>Run the home version on a spare always-on computer and manage it from your laptop or phone. Each download includes a setup guide, <code>home-node.md</code>.</p>
+            <p>Run the home version on a spare always-on computer. Each download includes a setup guide, <code>home-node.md</code>.</p>
             <ul class="dl-list">
               <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-x86_64.tar.gz">Linux x86_64</a> <span>35 MB</span></li>
               <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/ob-node_0.1.0-alpha.3_linux-arm64.tar.gz">Linux arm64</a> <span>36 MB</span></li>
@@ -290,28 +286,8 @@
               <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/OpenBazaar_0.1.0-alpha.3_android.apk.sha256">APK checksum</a></li>
             </ul>
           </article>
-          <article>
-            <h3>Check your download</h3>
-            <p>Every file comes from the official release. Compare yours against the published checksums.</p>
-            <ul class="dl-list">
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/SHA256SUMS">SHA256SUMS</a></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">Full release notes</a></li>
-            </ul>
-          </article>
         </div>
-      </div>
-    </section>
-
-    <section id="early" class="early" aria-labelledby="early-heading">
-      <div class="wrap early-layout">
-        <div>
-          <h2 id="early-heading">The first shops shape what it becomes</h2>
-          <p>There aren’t many shops yet, and that’s what this test is for. Open one, place a few test orders, and tell us what you needed and couldn’t find.</p>
-          <div class="actions">
-            <a class="button" href="#start">Get the app</a>
-            <a class="button button-quiet" href="https://github.com/OpenBazaar/openbazaar-rs/issues">Send feedback on GitHub</a>
-          </div>
-        </div>
+        <p class="verify-line">Every file comes from the official release. Check yours against <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.3/SHA256SUMS">SHA256SUMS</a>, or read the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">full release notes</a>.</p>
       </div>
     </section>
 
@@ -326,6 +302,7 @@
           <li><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a></li>
           <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/home-node.md">Home node guide</a></li>
           <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/b945f4f5a4e2a43b87f2b1d7d857532c1193b969/docs/escrow-review-packet.md">Escrow review notes</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Send feedback</a></li>
         </ul>
       </div>
     </section>
@@ -334,11 +311,11 @@
   <footer class="footer">
     <div class="wrap footer-grid">
       <div><a class="brand" href="#top"><img src="ob-market-logo-256.png" width="32" height="32" alt=""><span>OpenBazaar</span></a><p>Your own shop. No fees. No one to shut it down.</p></div>
-      <div><h3>Use it</h3><a href="#start">Get the app</a><a href="#sell">Selling</a><a href="#buy">Buying</a><a href="#orders">If something goes wrong</a><a href="#questions">Questions</a></div>
+      <div><h3>Use it</h3><a href="#start">Get the app</a><a href="#sell">Selling</a><a href="#buy">Buying</a><a href="#pay">Ways to pay</a><a href="#questions">Questions</a></div>
       <div><h3>Learn more</h3><a href="paper/">Design paper</a><a href="paper/openbazaar.pdf">Paper as PDF</a><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.3">Release notes</a></div>
       <div><h3>Get involved</h3><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Feedback and issues</a><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/main/LICENSE">MIT license</a></div>
     </div>
-    <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Test version on Bitcoin testnet4. Don’t use real bitcoin.</span><a href="#top">Back to top</a></div>
+    <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Test version on test networks. Don’t use real money.</span><a href="#top">Back to top</a></div>
   </footer>
 </body>
 </html>
