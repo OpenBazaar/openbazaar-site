@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#06070b">
+  <title>How to run OpenBazaar: install, Tor, Monero, Qubes</title>
+  <meta name="description" content="How to run the OpenBazaar app: install it on macOS, Windows or Linux, what Tor it uses (its own, on by default), how Monero is already on, and what to do on Qubes OS or minimal Linux without a keyring.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://openbazaar.org/howto/">
+  <meta property="og:title" content="How to run OpenBazaar">
+  <meta property="og:description" content="Install it, and it connects through Tor on its own. Monero is already on. And what to do on Qubes OS when there is no keyring.">
+  <meta property="og:image" content="https://openbazaar.org/ob-market-logo-256.png">
+  <link rel="icon" href="../ob-market-logo-256.png" type="image/png">
+  <link rel="preload" href="../fonts/bricolage-grotesque-wdth.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+  <script type="module" src="../site.js"></script>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="brand" href="../"><img src="../ob-market-logo-256.png" width="36" height="36" alt=""><span>OpenBazaar</span></a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav-links" hidden>Menu</button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="#install">Install</a></li>
+        <li><a href="#tor">Tor</a></li>
+        <li><a href="#monero">Monero</a></li>
+        <li><a href="#qubes">Qubes</a></li>
+      </ul>
+      <a class="button button-small" href="../#start">Get the app</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="install" class="section" aria-labelledby="install-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Howto · version 0.1.0 alpha 5</p>
+          <h1 id="install-heading">Install it, open it, and it runs</h1>
+          <p class="section-intro">One app does everything. Open it and your shop and wallet are running; quit and they stop. There is no account, no server to rent, and nothing else to install.</p>
+        </div>
+        <div class="prose">
+          <p><strong>macOS</strong> (Apple silicon and Intel): download the <code>.dmg</code> from the <a href="../#start">downloads</a>. The builds aren’t signed yet, so open the app once, then go to System Settings → Privacy &amp; Security and choose “Open Anyway”. On older macOS, right-click the app and choose Open.</p>
+          <p><strong>Windows</strong>: the <code>-setup.exe</code>. When SmartScreen says it protected your PC, choose “More info”, then “Run anyway”.</p>
+          <p><strong>Linux</strong>: the <code>.AppImage</code> (make it executable with <code>chmod +x</code> first), or the <code>.deb</code> for Debian and Ubuntu.</p>
+          <p>To keep a shop open around the clock, run the home version on a spare always-on computer instead, and manage it from your laptop or Android phone. Each download includes its setup guide, <code>home-node.md</code>.</p>
+        </div>
+        <p class="notice" role="note"><strong>Test coins only</strong> This is an early test version on test networks, where coins are free and worth nothing. Don’t send it real money. Every download and its checksum is on the <a href="../#start">downloads section</a> of the homepage.</p>
+      </div>
+    </section>
+
+    <section id="tor" class="section section-sunk" aria-labelledby="tor-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">The network</p>
+          <h2 id="tor-heading">Is it over Tor? Yes, on its own</h2>
+          <p class="section-intro">The app runs its own Tor client (Arti) inside its node. There is nothing to install or configure, and no setting that turns it off.</p>
+        </div>
+        <div class="prose">
+          <p>Browsing shops, chain and price queries, order mail and escrow mail all leave through that Tor client, and your shop’s address is a Tor onion address. A shop on the ordinary web is refused before any connection is made, and there is no fallback that quietly skips Tor.</p>
+          <p>Versions up to alpha 3 did not bundle Tor: they looked for one already running on the machine at <code>127.0.0.1:9050</code>, and stayed offline without it rather than touch the clear web. If an old build sits silent, that’s why. Update the app instead of installing Tor.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="monero" class="section" aria-labelledby="monero-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Coins</p>
+          <h2 id="monero-heading">Monero is already on</h2>
+          <p class="section-intro">Since alpha 4 there is nothing to set up: the app connects to public Monero daemons through Tor on its own. In these test builds that’s Monero’s stagenet, so the coins are worthless on purpose.</p>
+        </div>
+        <div class="prose">
+          <p>A shop that accepts Monero can be paid as soon as the app runs. It’s direct pay, without escrow, and the first sync can take a while.</p>
+          <p>To use your own Monero server instead, write its URL on one line in a file named <code>xmr-daemon</code> in the app’s data folder and restart the app. Zcash works the same way: a <code>zec-indexer</code> file overrides the built-in test server.</p>
+          <p>The app’s data folder is <code>~/.local/share/app.openbazaar.desktop</code> on Linux, <code>~/Library/Application Support/app.openbazaar.desktop</code> on macOS, and <code>%APPDATA%\app.openbazaar.desktop</code> on Windows.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="qubes" class="section section-sunk" aria-labelledby="qubes-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Qubes OS and minimal Linux</p>
+          <h2 id="qubes-heading">When there is no keyring</h2>
+          <p class="section-intro">The key that encrypts the app’s data lives in your system’s keyring: the macOS Keychain, the Windows Credential Manager, or on Linux the Secret Service.</p>
+        </div>
+        <div class="prose">
+          <p>A plain Fedora or Debian qube usually runs no Secret Service, and versions up to alpha 4 quit right at startup there, with the reason written only to the node’s log. From alpha 5 the app says what happened and offers to keep the key in a file in its data folder instead, readable only by your user. It remembers the choice, so it asks once.</p>
+          <p>On an older build, install and start <code>gnome-keyring</code> in the template, or just update: alpha 5 is on the <a href="../#start">downloads</a>.</p>
+          <p>When a start fails for any reason, the “why” is the last <code>ob-node:</code> line of <code>testnet4/node.log</code> in the app’s data folder. The log stays on your machine; nothing is reported anywhere, so include that line when you file an issue.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Test version on test networks. Don’t use real money.</span><a href="../">Back to the homepage</a></div>
+  </footer>
+</body>
+</html>

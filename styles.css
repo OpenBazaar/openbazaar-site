@@ -189,6 +189,12 @@ h1 { font: 500 clamp(40px, 4.4vw, 56px)/1.05 var(--display); letter-spacing: -0.
 .paths li { display: grid; grid-template-columns: 32px 1fr; padding-block: 8px; color: var(--text-2); counter-increment: path; }
 .paths li::before { content: counter(path); color: var(--text-3); font: 500 14px/1.6 var(--mono); font-variant-numeric: tabular-nums; }
 .notice { margin-top: 40px; padding: 16px 20px; border: 1px solid var(--line); border-left: 2px solid var(--magenta); background: var(--panel); color: var(--text-2); font-size: 15px; }
+
+/* Running text on the howto page. */
+.prose { max-width: 44rem; }
+.prose p { color: var(--text-2); }
+.prose p + p { margin-top: 16px; }
+.prose strong { color: var(--text); font-weight: 500; }
 .notice strong { display: block; margin-bottom: 4px; color: var(--text); font-weight: 500; }
 .release-table { margin-top: 40px; border-top: 1px solid var(--line-strong); }
 .release-row { display: grid; grid-template-columns: 180px 1fr 280px 260px; gap: 24px; align-items: center; padding-block: 20px; border-bottom: 1px solid var(--line); }
