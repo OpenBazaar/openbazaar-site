@@ -1,9 +1,19 @@
 # Homepage evidence and asset provenance
 
+Updated November 19, 2026 for the `v0.1.0-alpha.10` tag
+(`8a5a9f791777cea9205385833151efedad4a9137`, the merge of PR #187), which
+is what every download button now ships. Since alpha.6 the site skipped
+alpha.7 to alpha.9; the copy changed for: the escrow v5 dispute filing fee,
+paid to the moderator outside the escrow (#162); unconfirmed incoming Monero
+shown but never counted as balance or payment (#183); and on macOS the app
+waiting for an unanswered Keychain prompt after an update (#184). The
+alpha.10 app is still ad-hoc signed (`codesign -dv` reports
+`Signature=adhoc`), so the unsigned-build notes stand. Sizes are the release
+asset bytes divided by 1,000,000.
+
 Reviewed November 18, 2026 against the `v0.1.0-alpha.6` tag
-(`28d10e9c51a068b5e45c697a6fce9625fe96c4a3`) of OpenBazaar/openbazaar-rs,
-which is what every download button ships. That commit is the merge of
-PR #155. Since alpha.5 the tag also contains PRs #143, #144 and #145
+(`28d10e9c51a068b5e45c697a6fce9625fe96c4a3`) of OpenBazaar/openbazaar-rs.
+That commit is the merge of PR #155. Since alpha.5 the tag also contains PRs #143, #144 and #145
 (send Bitcoin, Monero, and Lightning out of the wallet), #151 (mainnet
 Lightning only when it is dialed over Tor; the desktop app still defaults
 to Mutinynet), #152 (pay a Zcash order from the node wallet), #153 (a

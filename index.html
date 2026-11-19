@@ -131,7 +131,7 @@
           <dl>
             <div>
               <dt>It never arrives, or isn’t as described</dt>
-              <dd>Open a dispute. The moderator you picked at checkout decides between the two outcomes agreed up front: your money back, or paid to the seller.</dd>
+              <dd>Open a dispute and pay the moderator’s filing fee, which is paid separately and never comes out of the escrow. The moderator you picked at checkout then decides between the two outcomes agreed up front: your money back, or paid to the seller.</dd>
             </div>
             <div>
               <dt>The seller goes silent</dt>
@@ -168,7 +168,7 @@
           </li>
           <li>
             <div class="coin-head"><h3>Monero</h3><span class="coin-status is-ready">In the app</span></div>
-            <p>A privacy-focused coin, on in the desktop app and the home node. The app connects through Tor on its own, so you don’t set up a Monero server or install Tor. There’s no escrow, and the first sync can take a while.</p>
+            <p>A privacy-focused coin, on in the desktop app and the home node. The app connects through Tor on its own, so you don’t set up a Monero server or install Tor. There’s no escrow, and the first sync can take a while. Incoming Monero shows up as unconfirmed right away, and only counts toward your balance or an order once it confirms.</p>
             <p class="coin-meta">Monero test network · No escrow</p>
           </li>
           <li>
@@ -189,7 +189,7 @@
         <div class="faq">
           <details id="ready" open>
             <summary>Can I use it for real sales today?</summary>
-            <p>No. This is an early test version (alpha 6) that runs on test networks, where coins are free and worth nothing. Set up a shop, place test orders and tell us what’s missing, but don’t send it real money. The apps aren’t signed with a developer certificate, so macOS may say the app is damaged; the download section explains how to open it.</p>
+            <p>No. This is an early test version (alpha 10) that runs on test networks, where coins are free and worth nothing. Set up a shop, place test orders and tell us what’s missing, but don’t send it real money. The apps aren’t signed with a developer certificate, so macOS may say the app is damaged; the download section explains how to open it.</p>
           </details>
           <details>
             <summary>Who else is on it?</summary>
@@ -226,7 +226,7 @@
     <section id="start" class="section start" aria-labelledby="start-heading">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Version 0.1.0 alpha 6</p>
+          <p class="eyebrow">Version 0.1.0 alpha 10</p>
           <h2 id="start-heading">Try it today, with test coins</h2>
           <p class="section-intro">One app does everything, with no sign-up. Open it and your shop is open, quit and it closes. The app connects through Tor on its own; you don’t install Tor.</p>
         </div>
@@ -255,20 +255,20 @@
           <article class="release-row">
             <h3>macOS</h3>
             <p>Apple silicon and Intel</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_universal.dmg">Download for Mac <span class="dl-size">82 MB</span></a>
-            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_universal.app.zip">zipped app</a></p>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_universal.dmg">Download for Mac <span class="dl-size">83 MB</span></a>
+            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_universal.app.zip">zipped app</a></p>
           </article>
           <article class="release-row">
             <h3>Windows</h3>
             <p>64-bit Windows</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_x64-setup.exe">Download for Windows <span class="dl-size">30 MB</span></a>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_x64-setup.exe">Download for Windows <span class="dl-size">30 MB</span></a>
             <p class="dl-alt">Installer, see the warning note above</p>
           </article>
           <article class="release-row">
             <h3>Linux</h3>
             <p>x86_64</p>
-            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_amd64.AppImage">Download AppImage <span class="dl-size">123 MB</span></a>
-            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_amd64.deb">.deb for Debian and Ubuntu</a></p>
+            <a class="button" href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_amd64.AppImage">Download AppImage <span class="dl-size">124 MB</span></a>
+            <p class="dl-alt">or the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_amd64.deb">.deb for Debian and Ubuntu</a></p>
           </article>
         </div>
 
@@ -277,22 +277,22 @@
             <h3>Keep your shop open around the clock</h3>
             <p>Run the home version on a spare always-on computer. It connects through Tor on its own too, and Monero and Lightning are on, same as the desktop app. Each download includes a setup guide, <code>home-node.md</code>.</p>
             <ul class="dl-list">
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/ob-node_0.1.0-alpha.6_linux-x86_64.tar.gz">Linux x86_64</a> <span>37 MB</span></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/ob-node_0.1.0-alpha.6_linux-arm64.tar.gz">Linux arm64</a> <span>37 MB</span></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/ob-node_0.1.0-alpha.6_macos-universal.tar.gz">macOS</a> <span>62 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/ob-node_0.1.0-alpha.10_linux-x86_64.tar.gz">Linux x86_64</a> <span>37 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/ob-node_0.1.0-alpha.10_linux-arm64.tar.gz">Linux arm64</a> <span>38 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/ob-node_0.1.0-alpha.10_macos-universal.tar.gz">macOS</a> <span>63 MB</span></li>
             </ul>
-            <p class="dl-alt">Docker: <code>ghcr.io/openbazaar/ob-node:0.1.0-alpha.6</code></p>
+            <p class="dl-alt">Docker: <code>ghcr.io/openbazaar/ob-node:0.1.0-alpha.10</code></p>
           </article>
           <article>
             <h3>Android</h3>
             <p>Manage a shop that runs on your home computer. Installed from the file, so your phone will ask you to allow it.</p>
             <ul class="dl-list">
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_android.apk">Download the APK</a> <span>88 MB</span></li>
-              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/OpenBazaar_0.1.0-alpha.6_android.apk.sha256">APK checksum</a></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_android.apk">Download the APK</a> <span>88 MB</span></li>
+              <li><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/OpenBazaar_0.1.0-alpha.10_android.apk.sha256">APK checksum</a></li>
             </ul>
           </article>
         </div>
-        <p class="verify-line">Every file comes from the official release. Check yours against <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.6/SHA256SUMS">SHA256SUMS</a>, or read the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.6">full release notes</a>.</p>
+        <p class="verify-line">Every file comes from the official release. Check yours against <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/download/v0.1.0-alpha.10/SHA256SUMS">SHA256SUMS</a>, or read the <a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.10">full release notes</a>.</p>
       </div>
     </section>
 
@@ -305,8 +305,8 @@
         <ul class="dev-links">
           <li><a href="paper/">Design paper</a></li>
           <li><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a></li>
-          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/28d10e9c51a068b5e45c697a6fce9625fe96c4a3/docs/home-node.md">Home node guide</a></li>
-          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/28d10e9c51a068b5e45c697a6fce9625fe96c4a3/docs/escrow-review-packet.md">Escrow review notes</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/8a5a9f791777cea9205385833151efedad4a9137/docs/home-node.md">Home node guide</a></li>
+          <li><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/8a5a9f791777cea9205385833151efedad4a9137/docs/escrow-review-packet.md">Escrow review notes</a></li>
           <li><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Send feedback</a></li>
         </ul>
       </div>
@@ -317,7 +317,7 @@
     <div class="wrap footer-grid">
       <div><a class="brand" href="#top"><img src="ob-market-logo-256.png" width="32" height="32" alt=""><span>OpenBazaar</span></a><p>Your own shop. No fees. No one to shut it down.</p></div>
       <div><h3>Use it</h3><a href="#start">Get the app</a><a href="#sell">Selling</a><a href="#buy">Buying</a><a href="#pay">Ways to pay</a><a href="#questions">Questions</a></div>
-      <div><h3>Learn more</h3><a href="howto/">How to run it</a><a href="paper/">Design paper</a><a href="paper/openbazaar.pdf">Paper as PDF</a><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.6">Release notes</a></div>
+      <div><h3>Learn more</h3><a href="howto/">How to run it</a><a href="paper/">Design paper</a><a href="paper/openbazaar.pdf">Paper as PDF</a><a href="https://github.com/OpenBazaar/openbazaar-rs/releases/tag/v0.1.0-alpha.10">Release notes</a></div>
       <div><h3>Get involved</h3><a href="https://github.com/OpenBazaar/openbazaar-rs/issues">Feedback and issues</a><a href="https://github.com/OpenBazaar/openbazaar-rs">Source code</a><a href="https://github.com/OpenBazaar/openbazaar-rs/blob/main/LICENSE">MIT license</a></div>
     </div>
     <div class="wrap footer-bottom"><span>No analytics. No third-party requests.</span><span>Test version on test networks. Don’t use real money.</span><a href="#top">Back to top</a></div>
