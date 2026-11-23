@@ -1,0 +1,46 @@
+\section{Order Sealing and Transport}
+\label{sec:orders}
+
+\input{figures/orderflow}
+
+An order is a private letter to one vendor, not a catalog record and not an event on a public relay. Figure~\ref{fig:orderflow} shows the flow.
+
+\subsection{Order contents}
+
+The order plaintext (magic \code{OBOD}, version 1) contains: the address of the first listing; its quantity; an options map of up to 16 string pairs, which carries the settlement type, the shipping charge, a delivery note for digital goods, and the address and quantity of any further listings from the same seller; the ship-to text (at most 1024 bytes) for physical goods; the payment rail; and a fresh X25519 public key $R$ that the vendor uses to reply. The order body carries no long-term buyer identity key. The vendor learns who the buyer is only from what the buyer writes into the letter (for a physical good, the ship-to) and from the payment.
+
+\subsection{Sealing}
+
+The node seals the plaintext with HPKE~\citep{rfc9180} in base mode with the suite DHKEM(X25519, HKDF-SHA256)~\citep{rfc7748,rfc5869}, HKDF-SHA256, and ChaCha20-Poly1305~\citep{rfc8439}. The recipient key is the vendor's mailbox key $P_V$; the HPKE \code{info} string is \code{openbazaar-tormail-order-v1}; the associated data is empty. The sealed letter is
+\[
+  \code{OBSL} \,\|\, \mathtt{0x02} \,\|\, \mathit{enc} \,\|\, \mathrm{len}_{32}(\mathit{ct}) \,\|\, \mathit{ct},
+\]
+where $\mathit{enc}$ is HPKE's 32-byte encapsulated ephemeral key. A vendor reply is sealed the same way to the buyer's per-order key $R$ with \code{info} \code{openbazaar-tormail-reply-v1}. A later message in the same sale uses \code{openbazaar-tormail-message-v1}. Because $R$ is generated per order and travels inside the ciphertext, no relay or mailbox needs to remember which buyer wrote to which vendor in order to route a reply.
+
+HPKE stays in base mode, so the outer ciphertext does not name a long-term sender. Inside it, the plaintext is an authenticated letter (\code{OBLT}): a per-conversation sender key, a message id, the body, and a BIP 340 signature over the recipient key, the kind, the sender, the id, and the body, under the tag \code{ob/letter/v1}. The plaintext is zero-padded so the sealed letter is exactly 2~KiB, 8~KiB, or 64~KiB, header included. Replies use the 2~KiB and 8~KiB buckets. Any other size is refused. An observer who sees a letter at rest or in transit learns the bucket. The sender key stays inside the ciphertext, and the recipient pins it after the first letter of a conversation. Anyone who knows $P_V$ can still produce a first letter the vendor will open. That is deliberate: a buyer has no long-term identity to show, and the vendor treats a new order as an offer that becomes real when it is paid. A mailbox can be filled with junk letters; it does not rate-limit.
+
+\subsection{Multi-seller checkout}
+
+A checkout may contain packages from several sellers. The node validates every package (each listing exists in the verified catalog, each package is one seller and each seller one package, moderated packages only contain listings that accept the moderator) before sealing anything, then seals one letter per seller to that seller's key. A seller learns only the lines in its own package. Each package gets its own payment instructions and its own payment (\S\ref{sec:payments}).
+
+\subsection{The mailbox}
+
+The vendor's node accepts letters into a mailbox directory without loading any secret: a letter is written to a temporary file and renamed to a random 128-bit identifier, so the identifier is not derived from the sender. Letters are opened later with the mailbox secret. A node that is compromised while the vendor is away therefore holds ciphertext, not orders, unless the mailbox secret is also stored on it.
+
+\subsection{A sale between two nodes}
+\label{sec:sale}
+
+On first start the node asks for a wallet passphrase and then whether the owner is shopping or selling. That choice is stored on the node and is not part of a signed record. A buyer can open a store later. A seller names the store; the node signs the store record and signs each listing the seller creates, edits, or deletes. A listing can carry a 16-byte id that stays put across edits, up to eight image hashes, and an optional price in USD, EUR, GBP, or JPY beside the signed satoshi price. The seller's node keeps earlier addresses of its own listings, so an order that names an older address still prices. A buyer follows another node's store at its onion address, or finds it through the directory (\S\ref{sec:directory}), and keeps a signed copy of its records.
+
+Checkout seals one order to the seller's mailbox key. The buyer's reply address travels inside the ciphertext. The order waits as ``Awaiting seller'' until the seller's node prices it: a fiat price at the seller's exchange rate at that moment, otherwise the signed satoshi price. The seller takes a fresh receive address and replies with the amount and the address, or declines. The buyer accepts a satoshi total only when it equals what checkout showed, and a fiat total only up to a quarter above that. A higher ask ends the order unpaid. After the first letter, each side accepts further letters in that sale only from the sender key it already pinned.
+
+The buyer pays the address in the reply from the node wallet or from any other wallet. When the node wallet broadcasts a direct payment, it sends the seller a letter naming the transaction. Compact block filters have no view of the network mempool, so the seller does not see that incoming payment until a block includes it. Until the sale is paid, the seller's screen says ``Payment sent, waiting for confirmation.'' The chain is what marks it paid: one confirmation on the test network and three on mainnet. The seller then ships a physical good with a carrier and tracking number, or sends the digital good's delivery text. The buyer confirms receipt, and both sides mark the sale completed. Inside the sale, buyer and seller can write plain-text messages to each other and conduct post-purchase return cases (\S\ref{sec:returns}), sealed and pinned to the same per-order keys.
+
+A sale between two nodes can use any rail the store's signed record accepts: direct payment in bitcoin, over Lightning, or in Monero or Zcash, or bitcoin escrow with a moderator the record lists (\S\ref{sec:payments}, \S\ref{sec:escrow}). For a rail other than on-chain bitcoin, the seller's reply names an invoice, a Monero subaddress, or a shielded Zcash address instead of a bitcoin address. The buyer's node checks the invoice or address and the arithmetic, and, since it need not watch that chain itself, follows the seller's status replies until the sale is paid.
+
+\subsection{Transport}
+\label{sec:transport}
+
+The buyer's node delivers each sealed letter over Tor to the v3 onion service~\citep{torrendv3} named in the store's signed record, and the seller replies to the reply onion the order carried. The buyer's node derives that onion for the one order from its letter root and publishes it on its own Tor client, so the seller learns no long-lived address of the buyer, and two orders do not share a reply address. Escrow letters use a reply onion per escrow in the same way. The node accepts a peer only as a v3 onion address, or as a loopback HTTP address for two nodes on one machine; anything else is refused before a connection opens, and a redirect is never followed as a second connection. The sender keeps each letter in an outbox and retries, from two seconds doubling up to fifteen minutes, and drops it after 24 hours. No third-party relay stores letters. A vendor whose node is never awake is a closed shop.
+
+Copies of followed stores, reviews sent to other nodes, and directory queries travel over Tor the same way, so the nodes that answer do not learn the asking node's IP address. Carrying letters over a mix network such as Nym~\citep{diaz2021nym,piotrowska2017loopix} is future work (\S\ref{sec:future}).

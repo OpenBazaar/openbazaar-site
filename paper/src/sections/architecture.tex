@@ -1,0 +1,64 @@
+\section{Architecture}
+\label{sec:architecture}
+
+\input{figures/architecture}
+
+Figure~\ref{fig:architecture} shows the components. A user runs a client and a node. The node holds the keys, the wallet, the encrypted vault, the verified catalog, and the escrow state; it watches the chain and talks to other nodes. The client renders the catalog, the cart, and the order screens, and holds no keys.
+
+\subsection{The client-node boundary}
+
+A node listens only on a loopback address and refuses requests whose TCP peer is not a loopback address; its onion services (\S\ref{sec:public-onion}, \S\ref{sec:remote}) reach it there through its own Tor client. On first start it creates a 256-bit random pairing token, stored in a file readable only by its owner. Requests that place orders, read or write the address book, or read the buyer's order list must carry the token. Cross-origin responses name only the client's origins, so a web page from another origin in the user's browser cannot read the token or call the node with it. A browser on the same machine can also be signed in without the token: the desktop app, which holds the token, asks the node for a one-time path, and opening it sets a short-lived session cookie that only loopback requests from the client's own origins may use. A phone or another computer that manages the node from somewhere else uses the channel in \S\ref{sec:remote}.
+
+This boundary protects against remote callers and against other web origins in the user's browser. It does not protect against another process running as the same user on the same machine, which can read the token file; we treat that as a compromised device (A6).
+
+Nodes leave escrow letters for each other in a drop that takes no pairing token, since the sender is another node, not the owner's client. The drop only stores the bytes. A letter has effect only if it opens under one of the node's keys and parses as an escrow message for an escrow the node is in, and every message is then checked against the signed terms (\S\ref{sec:escrow}).
+
+Checkout refuses a body that names a destination: a field such as \code{peer}, \code{onion}, \code{seed}, \code{replica}, or \code{url}, or any string value containing \code{://} or \code{.onion}. The vendor on an order is the store that signed the listing the node already holds. Following another node's store is separate, and that request accepts only a v3 onion address or a loopback address (\S\ref{sec:sale}).
+
+\subsection{The public onion}
+\label{sec:public-onion}
+
+A node also publishes a v3 onion service for its store. That service answers only public requests: the signed store record, catalog index, and listings (\code{GET /public/store}), media named by hash (\code{GET /public/media/\{hash\}}), the directory's signed admission snapshot and store-address list (\code{GET /public/admission-index}, \code{GET /public/admission-addresses}), reviews, the moderator profile, the order and escrow mail drops, and directory queries and submissions (\S\ref{sec:directory}). When configured with a static shop export (\code{--web-dir}), the public onion also serves that read-only web interface on \code{GET /} without forwarding any closed routes to the shop listener. Any other path is refused without reaching the node's own routes, and the onion is the address other nodes find in the store's signed record. For each order and each escrow, the buyer's node publishes a further reply onion (\S\ref{sec:transport}).
+
+\subsection{Public browsing and why the web stays read-only}
+\label{sec:public-browsing}
+
+Running a node is a high bar for a visitor who only wants to look at listings. The shipped reference implementation therefore supports two-layer public browsing without a central server copying or proxying listings:
+\begin{enumerate}
+  \item \textbf{Single-store browsing.} Any selling node configured with \code{--web-dir} serves a read-only shop page on its public onion (\code{GET /}), with no local-shop or home-node marker and no authentication cookies. A buyer can also pass any store's v3 onion or HTTPS URL via \code{/?store=}, or open a store link directly in the unpaired phone app without pairing to a home node. The page fetches \code{GET /public/store} and \code{GET /public/media/\{hash\}} directly from the seller's node, checks every BIP 340 signature, enforces the store's signed catalog index (\S\ref{sec:catalog-index}), and drops any record that fails plain-text validation.
+  \item \textbf{Public market browsing.} At \code{/}, the public market page fetches the directory's signed admission snapshot (\code{GET /public/admission-index}) and companion store addresses (\code{GET /public/admission-addresses}), verifies the snapshot under the compiled directory key, and then fetches each admitted store's signed catalog and images directly from that seller's own onion in Tor Browser. No central web server stores, copies, or proxies listings or photos. An HTTPS origin refuses to fetch onion catalogs and directs the user to open the market's onion address in Tor Browser.
+\end{enumerate}
+
+\paragraph{Why web and Tor Browser stay read-only.} Public browsing deliberately stops at the cart. Because a seller's node serves its own shop page on \code{GET /} (and any public web mirror is served by an untrusted host), the JavaScript executing in the browser is untrusted code supplied by a counterparty. Seller-served JavaScript must never hold buyer keys, assemble checkout, or derive payment or escrow addresses: a malicious seller could modify the served script to skip signature or moderator-record verification, suppress the refund-before-funding check, or substitute a direct address or MuSig2 Taproot aggregate key $Q$ that the seller controls alone. Buying and selling therefore stay out of seller-served web pages and require locally installed code (today, the user's own node via the desktop or paired app).
+
+\subsection{Remote devices}
+\label{sec:remote}
+
+The owner can manage the node from the native phone app or from another computer. The node publishes an admin onion service with restricted discovery: only a paired device's Tor client key can find the service. The phone app embeds Tor and uses it for that path. When paired, it talks to its own node and does not dial other vendors for checkout; when unpaired, it can still open a store link in the read-only browsing mode of \S\ref{sec:public-browsing}.
+
+Each paired phone holds two hardware-backed keys. The device key signs requests. The watch key is accepted only for synchronization, so a background check can refresh without unlocking the device key. A request signature covers the node, the device, the time, a nonce, the method, the target, and a hash of the body. The node accepts a time within 120 seconds of its clock and accepts each nonce only once.
+
+Pairing uses an eight-word secret or a QR code. Both sides display four emoji from the pairing transcript, and the device is added only when the owner approves it on the node. On the home network the app delivers requests through a channel sealed to the node key it pinned at pairing. If that channel does not answer, the app uses the admin onion. Removing a device drops it and its discovery key at once, and also drops devices that device had paired. The owner can move the node to a new onion address at the same time. Devices that remain learn the new address on their next request, and the old address is retired once they have moved or after seven days.
+
+A device session does not spend. Every spend requires the wallet passphrase again. Push is off unless that device opts in. A wake-up carries no order contents, and the node sends one only after the operator names a gateway. This project runs no gateway, so the path stays empty until someone does.
+
+\subsection{Buyer-only light mode (planned extension)}
+\label{sec:light-buyer}
+
+Requiring every buyer to operate an always-on node is unnecessary when only sellers must host catalogs and accept unsolicited orders. To bridge read-only public browsing (\S\ref{sec:public-browsing}) and full-node operation, the architecture includes a \emph{buyer-only light mode} for the signed desktop and mobile applications. \emph{Implementation status:} this mode is a planned extension and is not yet shipped in the reference implementation; in the current release, buying and selling still require the user's own node, and unpaired phone or browser sessions remain read-only.
+
+A buyer-only light client separates the buyer's trust boundary from both seller-served web pages and 24/7 node hosting:
+\begin{itemize}
+  \item \textbf{No 24/7 store hosting or home node.} The buyer installs the signed desktop or mobile application and never publishes a store onion or runs a background server. Sellers still run an always-on node to host their store, price orders, and watch payments.
+  \item \textbf{Deterministic keys from a 12-word recovery seed.} The client derives its per-order conversation keys, reply and review keys, and per-escrow keys $(b,B)$ deterministically on hardened paths from a standard 12-word BIP 39 seed (\S\ref{sec:identity}). Losing a phone or laptop therefore does not strand escrowed funds, provided the buyer keeps the seed and contract recovery record.
+  \item \textbf{Local verification in signed client code.} Because the verification logic ships inside the locally installed, signed application rather than seller-served JavaScript, the client independently verifies store records, signed catalog indexes, listings, moderator profiles $\mathcal{M}$, signed escrow terms $\tau^\ast$, the Taproot aggregate key $Q$, and the presigned refund $\tx{ref}$ before the buyer sends any funds.
+  \item \textbf{External or built-in funding.} Once terms and presigned spends verify, the buyer can fund a direct purchase or an escrow output $Q$ from any external wallet via QR code / BIP 21 URI, or from an optional built-in light wallet, without running a full node.
+  \item \textbf{Pull-based order updates.} Rather than publishing a persistent per-order reply onion on an always-on daemon, the light client polls the seller's onion over embedded Tor when opened to pull sealed status updates, tracking notices, and messages encrypted to its per-order key $R$.
+  \item \textbf{Local contract retention for unilateral disputes.} Before funding, the light client durably stores the signed contract bundle---the listing commitment, signed terms $\tau^\ast$, funding outpoint $o$, presigned refund $\tx{ref}$, and buyer-wins adaptor pre-signature $\hat\sigma_B$ with its encrypted moderator share. If the seller's node disappears after funding, the buyer still holds everything needed to file a self-verifying dispute letter directly with the moderator before $h_D$ or to broadcast $\tx{ref}$ unilaterally after $h_R$.
+\end{itemize}
+
+This preserves the escrow security properties of \S\ref{sec:security} (no custody, bounded moderator, refund before funding) for buyers without an always-on home node, at two trade-offs compared with a full node: order status updates are pull-based rather than pushed while the app is closed, and a buyer who funds from an external wallet relies on that wallet's chain source and must still retain or back up the presigned contract bundle alongside the 12-word seed.
+
+\subsection{Deployment}
+
+A vendor runs a node that stays awake on a computer the vendor controls, publishes the catalog (and optionally serves its read-only shop page via \code{--web-dir}), accepts sealed letters on its onion service, pays the directory fee, and watches the chain. In the current reference implementation, a buyer runs the same node software (locally on desktop or paired with a phone as in \S\ref{sec:remote}), while visitors without a node can browse read-only in Tor Browser or the unpaired phone app (\S\ref{sec:public-browsing}). Under the planned buyer-only light mode (\S\ref{sec:light-buyer}), buyers will transact from the signed desktop or mobile app without hosting a node. A sale between two nodes is \S\ref{sec:sale}. A moderator is a node like any other and needs to be online only to answer disputes.

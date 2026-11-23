@@ -24,7 +24,7 @@ served locally. There are no analytics or external page dependencies.
 - `assets/`: real testnet4 app captures (buyer marketplace, seller sales screen).
 - `fonts/`: self-hosted Bricolage Grotesque (headlines), Instrument Sans (text)
   and IBM Plex Mono (labels).
-- `paper/`: existing published technical paper, preserved separately.
+- `paper/`: published technical paper (`paper/index.html`, `paper/openbazaar.pdf`, `paper/preview.png`) and its LaTeX source (`paper/src/`).
 - `SOURCE_NOTES.md`: claim verification and asset provenance.
 
 The page works without JavaScript; the script only adds the mobile menu.
@@ -41,6 +41,8 @@ It is deployed to the Vercel project
 [openbazaar.org](https://openbazaar.org) via Vercel (Git-connected to this
 repo).
 
-The paper under `paper/` is generated from the main repository
-(`docs/paper/publish-pages.sh` in OpenBazaar/openbazaar-rs); refresh it from
-there rather than editing the PDF by hand.
+The paper under `paper/` is built from the LaTeX source in `paper/src/`
+with `tectonic main.tex` (mirrored from `docs/paper/` in
+OpenBazaar/openbazaar-rs); rebuild `paper/openbazaar.pdf`,
+`paper/preview.png`, and `paper/index.html` from source rather than editing
+the PDF by hand.

@@ -1,0 +1,50 @@
+\section{Limitations and Future Work}
+\label{sec:limitations}
+
+\subsection{Limitations}
+
+We collect the limitations of the design, ordered roughly by how much they matter to a user.
+
+\begin{enumerate}
+  \item \textbf{The moderator is trusted to rule, and to rule in time.} A moderator that does not rule leaves the escrow to the refund at $h_R+1$: a buyer who was not delivered to waits that long, and a vendor whose buyer stalls is not paid. Equivocation is provable, not preventable.
+  \item \textbf{Moderator and party collusion.} A moderator colluding with one party decides the dispute for that party. This is the same economic trust as a 2-of-3 multisignature escrow, and the protocol does not reduce it; it only removes the moderator's ability to take funds for itself or redirect them. Reputation, published equivocation proofs, and moderator panels (below) are the only counterweights.
+  \item \textbf{The filing fee is not enforced.} Version 5 terms remove the old fee bias: the filing fee is paid when a case is filed and is the same for every decision. What remains is trust in the moderator for the fee itself. A moderator that takes the fee and never decides is only listed as overdue in its public track record; nothing refunds the fee, and the escrow ends by its timelocks. A denial keeps the fee. A recusal refund and the refund of a payment the case does not keep are sent by the moderator's operator, not by the protocol. Because one fee covers a case and a moderator asks the other filer only after the first request lapsed unpaid, a late payment of the lapsed request can make both filers pay; that payment is owed back but is likewise refunded only if the operator sends it. Escrows funded under version 4 terms keep that version's bias toward vendor wins.
+  \item \textbf{The vendor must act before $h_D$.} The default outcome is the buyer's refund, so a vendor whose buyer received the goods but neither releases nor disputes must open a dispute in time, and pays the filing fee to be paid.
+  \item \textbf{Proof size and verification cost.} Each verifiable share is about 50~KB and costs about 50~ms to verify. Funding carries two shares, and an attacker can make a moderator verify many letters. The cost is tolerable on a laptop and heavy on a phone.
+  \item \textbf{Presigned fees and pinning.} Presigned escrow spends have fees fixed at funding and rely on a child-pays-for-parent bump through the anchor. As version-2 transactions they lack TRUC's pinning protection, and a fee spike near $h_R$ can let the buyer's refund race the vendor's dispute outcome.
+  \item \textbf{Escrow outcomes are recognizable.} The anchor output marks refund and dispute spends as contract spends, and an on-chain filing fee has the published fee's amount and follows a dispute in time.
+  \item \textbf{Partial catalog freshness.} Per-store signed catalog indexes (\code{OBCX}) cause nodes and read-only browsers to drop retracted or unnamed listings relative to the index held, and the directory's signed admission snapshot (\code{OBAX}) makes exclusion of a paid admission checkable. Neither prevents a replica or a set of colluding introductions from withholding a newer index sequence altogether.
+  \item \textbf{One directory.} The software ships one directory key. Its operator chooses every introduction, signs the admission snapshot, and sets the fee. A higher fee applies only to payments after its notice runs out, so it cannot hide a store that already paid, but the schedule rules rest on trust on first use: a new node, or one offline for more than 144 blocks, accepts the first head it is shown, including one whose new entries were backdated, and no head is anchored on chain. If every introduction withholds a new head for longer than that, nodes that were online refuse it until the operator announces its terms again. The fee key cannot rotate yet. A store followed by its address does not depend on the directory, but finding new stores does.
+  \item \textbf{Fee payments link wallets to stores.} Each store's fee address can be computed by anyone from the head and the store key, so the coins that pay a store's fee are tied to that store on chain. Paying from the same wallet as other purchases links them to the store.
+  \item \textbf{Amounts can identify listings.} Public prices let a chain observer guess what was bought from the payment amount.
+  \item \textbf{Letter sizes leak.} Letters are padded to a few size buckets, so an observer learns the bucket.
+  \item \textbf{Timing correlation.} Tor does not resist an adversary who can watch both ends of a circuit: a phone and its home node, or a buyer's node and a store's node. Letter timing can still be correlated with chain timing.
+  \item \textbf{Reviews show signed purchases, not independent buyers.} A seller can sign receipts for review keys it holds and review itself, and a review reaches only nodes connected to one that holds it.
+  \item \textbf{Labels are only advice.} Self-labels are only as honest as the vendor, and labelers only as good as the buyer's choice of them; nothing in the design removes content from the network.
+  \item \textbf{The device is trusted.} A process on the same machine can act as the client, and at-rest encryption is only as strong as the protection of its key.
+  \item \textbf{Informal analysis and mainnet escrow prerequisites.} The security arguments in \S\ref{sec:security} are informal. Moderated escrow remains refused on mainnet in the reference implementation pending an external cryptographic review, an independent moderator operating its own keys and mailbox, and the reviewer's call on TRUC (version 3) presigned spends; mainnet Zcash wallet sends are likewise disabled.
+  \item \textbf{Buyer-only light mode is not yet shipped.} Public browsing works without a node in Tor Browser and the unpaired phone app, but placing orders and running escrow still require the user's own node until the buyer-only light client of \S\ref{sec:light-buyer} is implemented.
+\end{enumerate}
+
+\subsection{Future work}
+\label{sec:future}
+
+A change to the protocol, to payments, to the threat model, or to the seller's flow updates this paper in the same pull request. The paragraphs below are open problems or planned extensions. They are not behavior the shipped nodes already have.
+
+\paragraph{Buyer-only light client.} Implementing the buyer-only light mode specified in \S\ref{sec:light-buyer} inside the signed desktop and mobile apps---deterministic buyer order and escrow keys from a 12-word seed, local contract and refund verification, QR/external-wallet or light-wallet funding, pull-based order updates from the seller's onion, and durable local contract retention for unilateral disputes---so buyers can transact without running a 24/7 node while keeping web browsers read-only.
+
+\paragraph{Smaller verifiable encryption.} Bitwise ElGamal is simple and relies only on the discrete-log setting of secp256k1, but it is large. Batch verification of the 256 bit proofs would cut the moderator's verification cost substantially without changing the format. Verifiable encryption in a group with an easy discrete-log subgroup, such as the class-group or Paillier-based constructions used for two-party ECDSA and scriptless swaps~\citep{shlomovits2020juggling}, could reduce the share to a few kilobytes, at the cost of a second hardness assumption.
+
+\paragraph{Moderator panels.} Replacing the single moderator with a $t$-of-$n$ panel that shares the decryption key with FROST-style key generation~\citep{komlo2020frost} would require collusion between a party and $t$ moderators rather than one.
+
+\paragraph{Enforced fee refunds.} A filing fee that is refunded by protocol rather than by the moderator's operator when the moderator does not decide by $h_V$, for example through a Lightning hold invoice or a time-locked on-chain bond, is open.
+
+\paragraph{Pinning-resistant presigned spends.} Moving the presigned spends to TRUC transactions with an ephemeral anchor would give them the pinning protection that version-2 transactions lack.
+
+\paragraph{Multiple directories and freshness anchoring.} Per-store catalog indexes (\code{OBCX}) and directory admission snapshots (\code{OBAX}) are now implemented (\S\ref{sec:catalog-index}, \S\ref{sec:directory}). Supporting more than one directory, each with its own key, introductions, and fee terms, would remove the single operator; how a node chooses among them, how a store is admitted to several, and how index freshness is anchored against withholding across colluding introductions remain open.
+
+\paragraph{Private retrieval and transport.} Private information retrieval for catalog records at scale, and carrying order letters over a mix network rather than Tor.
+
+\paragraph{Reputation.} Reviews (\S\ref{sec:reviews}) and moderators' published rulings and outcomes (\S\ref{sec:escrow}) are the reputation signals in the design. Two additions are not designed beyond their outline: an optional seller bond, time-locked on chain and spendable only by the store key, that a buyer can verify before ordering, with a rule that a store with no finished escrow sales posts one before an escrow can start, where the chain check that gives a bond its meaning is not specified; and a new-store state that shows no stars until a store has verified sales and shows its first sales as moderated escrow. Each needs care so that a direct payment between a seller and itself does not count as a completed escrow sale.
+
+\paragraph{Formal analysis.} A game-based proof of the escrow properties, and a machine-checked model of the message rounds and timeline.

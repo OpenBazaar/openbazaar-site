@@ -1,0 +1,26 @@
+\section{Discovery and Search}
+\label{sec:discovery}
+
+\subsection{Search on the device}
+
+Search runs over store records and listing headers already held by the client: a case-insensitive substring match over title, category, ship-from country, kind, description, and seller name, plus store search over store name, region, tagline, and about text before a store's listings are fetched. Buyers also narrow results on the device by the closed 15-category taxonomy (\S\ref{sec:commerce}) and by signed version-7 fields: condition grade, minimum and maximum satoshi price bounds, and known structured item specifics (dropping unknown or non-plain-text filter values). The query is not sent anywhere, so neither the node, a replica, nor an index learns the search terms. The cost is that the client must hold the headers it searches. We measured the substring filter at 0.2~ms per query over 1{,}000 headers and 5~ms over 10{,}000 headers on a laptop (\S\ref{sec:evaluation}); 100{,}000 headers took 49--67~ms per query. Matching is literal; there is no ranking, stemming, or remote index. Results then pass through the buyer's content filter (\S\ref{sec:labels}), which also runs on the device.
+
+\subsection{Finding stores and nodes}
+
+The design treats every source of nodes as untrusted for content and only partly trusted for availability:
+\begin{itemize}
+  \item A user can paste a store's address, its onion. The node follows it over Tor, copies its signed store record, catalog index, and listings, and shows the store whether or not the directory admits it.
+  \item A user can follow a store by its key alone. The node fetches the store's record and catalog index from the introductions and keeps them only if the signatures match that key.
+  \item The directory (\S\ref{sec:directory}) publishes a signed head (\code{OBSD}), a signed admission snapshot (\code{OBAX}), and admissions (\code{OBAD}) that each node checks against the chain. Two introductions ship with the software; the node remembers the latest head and snapshot across sessions.
+  \item Every record received from any source is verified against its signature, content hash, plain-text rules, and the store's signed catalog index (\code{OBCX}) before use; listings unnamed by a store's catalog index or carrying bad signatures are dropped.
+\end{itemize}
+
+The node never takes an onion address from a client request when it follows by key: the onion it dials for a store's listings is the one in that store's signed record. Because records are self-authenticating, a malicious introduction or replica cannot forge or alter a listing, and per-store catalog indexes prevent it from keeping retracted listings alive alongside a current index. It can still withhold records, serve a stale index sequence (\S\ref{sec:catalog-index}), or, if it controls every introduction a node asks, present a partial view of the network: an eclipse attack~\citep{heilman2015eclipse}. A head lists up to 64 introductions and a node rotates among them, a signed admission snapshot exposes omissions of valid on-chain admissions, and a pasted address does not depend on the directory at all; these are the mitigations. The directory fee is a cost per store and epoch; no Sybil defense~\citep{douceur2002sybil} for introductions is designed beyond the operator's choice of them.
+
+\subsection{Public browsing without a node}
+
+As described in \S\ref{sec:public-browsing}, the shipped reference implementation exposes two read-only entry points that require no local node: opening a single seller's shop page directly on its onion (\code{GET /} via \code{--web-dir}), via \code{/?store=}, or in the unpaired phone app; and opening the public market page at \code{/} in Tor Browser, which verifies \code{OBAX} under the compiled directory key and fetches each admitted store's \code{GET /public/store} and images directly from that seller's onion without any server copying or proxying listings. Because browser pages are untrusted code served by remote nodes, checkout and wallet operations remain disabled there and direct users to the desktop or mobile application.
+
+\subsection{Private search at scale}
+
+On-device search stops scaling when the catalog no longer fits on a phone. The next step in the design is private information retrieval (PIR)~\citep{chor1995pir} against a periodic snapshot of the header catalog, so that a replica answers a query without learning which records were fetched. Single-server lattice-based schemes such as SimplePIR~\citep{henzinger2023simplepir} make this plausible for databases of the relevant size. The scheme is not designed in detail (\S\ref{sec:future}). Until then, a client that fetches individual records from a replica reveals its interest in those records to that replica.
