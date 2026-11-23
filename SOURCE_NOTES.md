@@ -135,4 +135,22 @@ The Docker image `ghcr.io/openbazaar/ob-node:0.1.0-alpha.6` was pushed by the
 release workflow (manifest `sha256:1f0b7f964c92b4d6bc62471db5746c7de5c10c711c2662eddc77ba45e2c0f814`,
 from the workflow's push log, run 44216282880).
 `node --check site.js` passed. The pages make no third-party requests.
-`paper/` is unchanged.
+
+## Design paper (`paper/`)
+
+Updated November 23, 2026 and verified against `v0.1.0-alpha.13`
+(`6ae830b`) of OpenBazaar/openbazaar-rs. Rebuilt `paper/openbazaar.pdf`
+(53 pages, via `tectonic` from `paper/src/main.tex`), regenerated
+`paper/preview.png` (`qlmanage` + `sips`), and synced `paper/index.html`.
+
+| Paper addition / update | Status in `v0.1.0-alpha.13` (`6ae830b`) | Evidence |
+| --- | --- | --- |
+| Read-only two-layer public browsing (`--web-dir`, `/?store=`, public market page at `/` loading admitted stores directly from seller onions in Tor Browser, unpaired phone store view) | Shipped | PRs #199, #206, #207, #212 (`crates/node/src/public_http.rs`, `sale_gate.rs`, `remote/web.rs`, `apps/mobile/src/directStore.ts`, `publicMarket.ts`, `HomeNodeApp.tsx`) |
+| Why web/Tor Browser stays read-only (seller-served JS never holds keys, runs checkout, or derives payment/MuSig2 escrow keys) | Architectural invariant | `crates/node/src/remote/web.rs` (`bare_page`), `apps/mobile/src/directStore.ts` (`PAYMENT_NOTE`), `publicMarket.ts` (`NODE_REQUIRED`) |
+| Buyer-only light mode (signed desktop/mobile app without 24/7 node, deterministic BIP 39 buyer/escrow keys, local verification, QR/built-in funding, pull-based updates, local contract retention for unilateral disputes) | Planned extension (explicitly labeled as not yet shipped in the paper) | Documented in `paper/src/sections/architecture.tex` (`\S\ref{sec:light-buyer}`) and `limitations.tex` |
+| Directory admission snapshots (`OBAX`, `ob/admission-index/v1`) and per-store signed catalog indexes (`OBCX`, `ob/catalog-index/v1`) dropping unnamed/mis-signed listings; chain check still governs admissions | Shipped | PRs #201, #206 (`crates/protocol/src/catalog_index.rs`, `crates/node/src/directory.rs`, `crates/tormail/src/transport.rs`) |
+| Closed 15-category signed taxonomy, `plain_text` control/bidi check on both sign and verify across listings, commerce fields, and filters, ISO country ships-from, GTIN/UPC/EAN/ISBN check-digit validation, verified reviews surfaced before purchase, signed condition/price/specifics search filters | Shipped | PRs #189, #193, #198, #202 (`crates/protocol/src/taxonomy.rs`, `plain_text.rs`, `commerce.rs`, `apps/mobile/src/countries.ts`, `listingFields.ts`, `search.ts`, `marketplace/Reviews.tsx`) |
+| Post-purchase return cases (`requested`, `accepted`, `declined`, `shipped` with return tracking) over the sealed order channel, frozen to order-time policy, decoupled from escrow | Shipped | PR #200 (`crates/node/src/return_case.rs`, `remote_orders.rs`, `apps/mobile/src/returnCase.ts`) |
+| Multi-rail payments (Bitcoin on-chain + RBF, Lightning over Tor, Monero, Zcash including testnet wallet send from confirmed Ironwood notes with mainnet send off; phone Monero/Zcash view & pay) | Shipped | PRs #191, #192, #208 (`crates/node/src/zec/send.rs`, `apps/mobile/src/NativePayments.tsx`, `WalletPage.tsx`, `ZcashSend.tsx`) |
+| Bitcoin-only escrow refused on mainnet pending external cryptographic review, independent moderator, and TRUC (v3) assessment; Tor escrow mail delivery and proxied broadcast implemented | Shipped (testnet4) / mainnet refused | `crates/node/src/instructions.rs` (`ESCROW_MAINNET_REFUSAL`), `crates/node/src/escrow_outbox.rs`, `docs/escrow-review-packet.md` |
+| Portable `ob-node` binaries (static `liblzma` on macOS, `rustls` without OpenSSL on Linux, static MSVC CRT on Windows) | Shipped | PRs #214, #215 (`.github/workflows/release.yml`, `scripts/check-macos-dylibs.py`, `check-linux-so.py`, `check-pe-imports.py`, `docs/STATUS.md`) |

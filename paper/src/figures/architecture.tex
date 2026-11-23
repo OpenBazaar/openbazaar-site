@@ -1,0 +1,36 @@
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=1.05cm, text width=2.5cm, fill=white},
+  ext/.style={box, fill=black!5},
+  impl/.style={-{Stealth[length=2mm]}, thick},
+  lbl/.style={font=\scriptsize, align=center, fill=white, inner sep=1pt}
+]
+\node[box] (client) at (0,0) {Buyer client\\\scriptsize phone app, desktop};
+\node[box] (bnode) at (0,-2.6) {Buyer node\\\scriptsize keys, vault, wallet};
+\node[box] (vnode) at (9.0,-2.6) {Vendor node\\\scriptsize mailbox, wallet};
+\node[box] (vapp) at (9.0,0) {Vendor client\\\scriptsize opens letters};
+\node[ext] (tor) at (4.5,-2.6) {Tor onion\\services};
+\node[ext] (rep) at (4.5,-0.3) {Introductions\\and replicas};
+\node[ext] (mod) at (13.6,0.4) {Moderator\\\scriptsize dispute only};
+\node[ext] (esplora) at (0,-5.0) {Chain data\\\scriptsize own node or filters};
+\node[ext] (chain) at (4.5,-5.0) {Bitcoin network};
+\node[ext] (rates) at (-4.5,-2.6) {Exchange-rate\\endpoint};
+
+\draw[impl] (client) -- node[lbl, left, xshift=-2pt]{home channel\\or Tor} (bnode);
+\draw[impl] (bnode) -- node[lbl, above=3pt]{sealed\\letter} (tor);
+\draw[impl] (tor) -- node[lbl, above=3pt]{outbox} (vnode);
+\draw[impl] (vnode) -- node[lbl, right]{paired} (vapp);
+\draw[impl] (bnode.north east) -- node[lbl, sloped, above]{catalog} (rep.south west);
+\draw[impl] (vnode.north west) -- node[lbl, sloped, above]{publish} (rep.south east);
+\draw[impl] (bnode) -- node[lbl, left]{addresses, txs} (esplora);
+\draw[impl] (bnode.south east) -- node[lbl, sloped, above]{broadcast} (chain);
+\draw[impl] (vnode.south west) -- node[lbl, sloped, above]{payments} (chain);
+\draw[impl] (vnode) -- node[lbl, sloped, above]{dispute letter} (mod);
+\draw[impl] (bnode) -- node[lbl, above=3pt]{rates,\\if proxied} (rates);
+\end{tikzpicture}}
+\caption{Components and data paths in node-backed operation. A paired phone reaches its node over a sealed home-network channel or Tor. A sale's sealed letters go over Tor to the store's onion and to a reply onion for the order. Catalog records and signed indexes come from introductions and followed stores, also over Tor; read-only browsers can fetch public store records directly from seller onions without running a node (\S\ref{sec:public-browsing}), while the planned buyer-only light client (\S\ref{sec:light-buyer}) moves local buyer verification and deterministic key derivation into the signed app. The moderator is contacted only when a party opens a dispute.}
+\label{fig:architecture}
+\end{figure}
