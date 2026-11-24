@@ -1,5 +1,26 @@
 # Homepage evidence and asset provenance
 
+Updated November 24, 2026 for the `v0.1.0-alpha.15` tag
+(`c10834086144ba4b31d81574e03c070bb4a72a98`, OpenBazaar/openbazaar-rs). Every
+download link on the homepage and howto was HEAD-checked (200 after redirects),
+and the release's `release` run finished green, including the home node image
+(`ghcr.io/openbazaar/ob-node:0.1.0-alpha.15`). Sizes are the asset bytes divided
+by 1,000,000, rounded. The `.dmg`, `.app.zip` and `-setup.exe` were downloaded
+and their SHA-256 matched `SHA256SUMS`.
+
+Signing, checked on the downloaded `.dmg` by mounting it at an explicit path:
+`OpenBazaar.app` is signed with `Developer ID Application` (team `4ZLQY6D8U5`),
+`spctl` accepts it as `Notarized Developer ID`, and `xcrun stapler validate`
+passes. The macOS `ob-node` binary is Developer ID signed; its notarization
+ticket was not checked, since a bare binary cannot carry a stapled ticket. The
+Windows installer's signature was not checked, so the homepage says only that it
+is not signed with a developer certificate, which the release notes state. The
+copy says nothing about auto-updates, since those rest on the release notes only.
+
+Earlier note: a first check of the `.dmg` at a shared mount path inspected the
+wrong volume and reported ad-hoc signing. The explicit-mount check above is the
+one that stands.
+
 Updated November 19, 2026 for the `v0.1.0-alpha.10` tag
 (`8a5a9f791777cea9205385833151efedad4a9137`, the merge of PR #187), which
 is what every download button now ships. Since alpha.6 the site skipped
@@ -47,7 +68,7 @@ sentence, not just the link.
 | Buyers and sellers can message each other inside an order | `apps/mobile/src/marketplace/MessageThread.tsx` at the tag (PR #136, merged before this release) |
 | The app connects through Tor on its own; you don't install Tor | Desktop sidecar always passes `--tor` (`apps/desktop/src-tauri/src/node.rs`); home node does too (`Dockerfile` CMD, `packaging/systemd/ob-node.service`, `packaging/macos/app.openbazaar.home-node.plist`). PR #146 |
 | No iPhone app | iOS checked only on the simulator (`docs/STATUS.md`); the release attaches an Android APK, not an App Store build |
-| Apps aren't signed with a developer certificate; macOS may say the app is damaged | Release notes and `.github/workflows/release.yml`: ad-hoc signature is verified with `codesign --verify --deep --strict`; the damaged dialog is quarantine, cleared with `xattr -cr /Applications/OpenBazaar.app`. Developer ID and notarization run only when the `APPLE_*` secrets are set, and they are not set for this release |
+| Mac app signed and notarized from alpha 15; the Windows installer is not signed with a developer certificate | Alpha 15: the mounted `.dmg`'s app is Developer ID signed, `spctl` says `Notarized Developer ID`, and `stapler validate` passes (see the header). Windows: release notes only, not checked. Earlier builds: ad-hoc signed, so the damaged dialog is quarantine, cleared with `xattr -cr /Applications/OpenBazaar.app` |
 | MIT license | Root `LICENSE` |
 
 ## Ways to pay
