@@ -37,12 +37,12 @@
     <section id="install" class="section" aria-labelledby="install-heading">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Howto · version 0.1.0 alpha 10</p>
+          <p class="eyebrow">Howto · version 0.1.0 alpha 15</p>
           <h1 id="install-heading">Install it, open it, and it runs</h1>
           <p class="section-intro">One app does everything. Open it and your shop and wallet are running; quit and they stop. There is no account, no server to rent, and nothing else to install.</p>
         </div>
         <div class="prose">
-          <p><strong>macOS</strong> (Apple silicon and Intel): download the <code>.dmg</code> from the <a href="../#start">downloads</a>. The builds aren’t signed with a developer certificate. If the dialog says the app is damaged and offers no way to open it (usual on Apple silicon), the app is not damaged: macOS marks a download it cannot verify that way. Open Terminal and run <code>xattr -cr /Applications/OpenBazaar.app</code>, then open the app normally. If the dialog instead names an unidentified developer, open the app once, then go to System Settings → Privacy &amp; Security and choose “Open Anyway”. On older macOS, right-click the app and choose Open.</p>
+          <p><strong>macOS</strong> (Apple silicon and Intel): download the <code>.dmg</code> from the <a href="../#start">downloads</a>. Since alpha 15 the Mac app is signed and notarized by Apple, so it opens normally. Older builds, before alpha 15, may not open: if the dialog says the app is damaged and offers no way to open it, the app is not damaged. macOS marks a download it cannot verify that way. Open Terminal and run <code>xattr -cr /Applications/OpenBazaar.app</code>, then open the app normally.</p>
           <p>When you update on macOS, it asks once more whether OpenBazaar may use the key it keeps in your Keychain. Choose “Always Allow”. Since alpha 10 the app waits for your answer and says it’s waiting, instead of failing to start while the question is open.</p>
           <p><strong>Windows</strong>: the <code>-setup.exe</code>. When SmartScreen says it protected your PC, choose “More info”, then “Run anyway”.</p>
           <p><strong>Linux</strong>: the <code>.AppImage</code> (make it executable with <code>chmod +x</code> first), or the <code>.deb</code> for Debian and Ubuntu.</p>
@@ -90,7 +90,7 @@
         </div>
         <div class="prose">
           <p>A plain Fedora or Debian qube usually runs no Secret Service, and versions up to alpha 4 quit right at startup there, with the reason written only to the node’s log. From alpha 5 the app says what happened and offers to keep the key in a file in its data folder instead, readable only by your user. It remembers the choice, so it asks once.</p>
-          <p>On an older build, install and start <code>gnome-keyring</code> in the template, or just update: alpha 10 is on the <a href="../#start">downloads</a>.</p>
+          <p>On an older build, install and start <code>gnome-keyring</code> in the template, or just update: alpha 15 is on the <a href="../#start">downloads</a>.</p>
           <p>When a start fails for any reason, the “why” is the last <code>ob-node:</code> line of <code>testnet4/node.log</code> in the app’s data folder. The log stays on your machine; nothing is reported anywhere, so include that line when you file an issue.</p>
         </div>
       </div>
