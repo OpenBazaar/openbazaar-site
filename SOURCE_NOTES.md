@@ -1,5 +1,22 @@
 # Homepage evidence and asset provenance
 
+Updated November 26, 2026 for the `v0.1.0-alpha.21` tag
+(`566f01a0d1b64d5e04b57ed1eddba99e984a7996`, OpenBazaar/openbazaar-rs). Every
+download link on the homepage and howto was HEAD-checked (200 after redirects),
+and the release's `release` and `mobile` runs finished green, including the
+home node image (`ghcr.io/openbazaar/ob-node:0.1.0-alpha.21`) and the Android
+APK. Sizes are the asset bytes divided by 1,000,000, rounded. Since alpha.15
+the site skipped alpha.16 to alpha.20; notable fixes in this build include the
+Windows node stdin-watchdog hang (#231), payment broadcast when no filter peer
+takes the transaction (#237), and payment-toggle scroll (#238).
+
+Signing was last checked on the alpha.15 `.dmg` (Developer ID Application team
+`4ZLQY6D8U5`, `spctl` `Notarized Developer ID`, stapler validate). The release
+notes for alpha.21 still say the Mac app is signed and notarized and the
+Windows installer is not signed with a developer certificate; those claims are
+unchanged on the homepage. The copy says nothing about auto-updates, since
+those rest on the release notes only.
+
 Updated November 24, 2026 for the `v0.1.0-alpha.15` tag
 (`c10834086144ba4b31d81574e03c070bb4a72a98`, OpenBazaar/openbazaar-rs). Every
 download link on the homepage and howto was HEAD-checked (200 after redirects),
