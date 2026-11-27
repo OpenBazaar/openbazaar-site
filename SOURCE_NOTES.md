@@ -1,5 +1,12 @@
 # Homepage evidence and asset provenance
 
+Updated November 27, 2026 for the `v0.1.0-alpha.22` tag
+(`305dbd19ffb018ab4470291cff3398914ef333fd`, OpenBazaar/openbazaar-rs). Every
+download link on the homepage and howto was updated to point at the alpha.22
+release assets. The release includes PR #279 (0-conf admission fee, Arti Tor
+hardening, moderator signed catalog bundle) and PR #278 (Store Directory page).
+Sizes will be verified once the release workflow publishes the assets.
+
 Updated November 26, 2026 for the `v0.1.0-alpha.21` tag
 (`566f01a0d1b64d5e04b57ed1eddba99e984a7996`, OpenBazaar/openbazaar-rs). Every
 download link on the homepage and howto was HEAD-checked (200 after redirects),
